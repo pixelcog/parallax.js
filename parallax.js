@@ -1,5 +1,5 @@
 /*!
- * parallax.js v0.9.1 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.0 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -50,12 +50,24 @@
     }
 
     this.$element = $(element);
-    this.$mirror = $('<div />').prependTo('body');
-    this.$slider = $('<img />').prependTo(this.$mirror);
 
     if (!this.imageSrc && this.$element.is('img')) {
       this.imageSrc = this.$element.attr('src');
     }
+
+    if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+      if (this.iosFix && !this.$element.is('img')) {
+        this.$element.css({
+          backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        });
+      }
+      return this;
+    }
+
+    this.$mirror = $('<div />').prependTo('body');
+    this.$slider = $('<img />').prependTo(this.$mirror);
 
     this.$mirror.addClass('parallax-mirror').css({
       visibility: 'hidden',
@@ -94,6 +106,7 @@
     speed:  0.2,
     bleed:  0,
     zIndex: -100,
+    iosFix: true,
 
     refresh: function() {
       this.boxWidth        = this.$element.width();

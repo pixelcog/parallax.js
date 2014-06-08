@@ -87,6 +87,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>0</td>
 			<td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
 		</tr>
+		<tr>
+			<td>iosFix</td>
+			<td>boolean</td>
+			<td>true</td>
+			<td>iOS devices are incompatable with this plugin. If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. Disable this if you wish to implement your own graceful degradation.</td>
+		</tr>
 	</tbody>
 </table>
 
