@@ -1,5 +1,5 @@
 /*!
- * parallax.js v0.9 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v0.9.1 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -156,8 +156,8 @@
   // Parallax Static Methods
 
   $.extend(Parallax, {
-    scrollTop:    0,
-    scrollLeft:   0,
+    scrollTop:    $window.scrollTop(),
+    scrollLeft:   $window.scrollLeft(),
     winHeight:    0,
     winWidth:     0,
     docHeight:    0,
@@ -171,7 +171,7 @@
       if (this.isReady) return;
 
       $window
-        .on('scroll.px.parallax', function(){
+        .on('scroll.px.parallax load.px.parallax', function(){
           var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
           Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax, $window.scrollTop()));
