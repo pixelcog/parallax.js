@@ -76,59 +76,61 @@
         <p>Options can be passed in via data attributes of JavaScript. For data attributes, append the option name to <code>data-</code>, as in <code>data-image-src=&quot;&quot;</code>.</p>
 
         <div class="alert alert-warning"><p>Note that when specifying these options as html data-attributes, you should convert &#8220;camelCased&#8221; variable names into &#8220;dash-separated&#8221; lower-case names (i.e. <code>zIndex</code> would be <code>data-z-index=&quot;&quot;</code>).</p></div>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th style="width: 100px;">Name</th>
-                    <th style="width: 100px;">type</th>
-                    <th style="width: 50px;">default</th>
-                    <th>description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>imageSrc</td>
-                    <td>path</td>
-                    <td>null</td>
-                    <td>You must provide a path to the image you wish to apply to the parallax effect.</td>
-                </tr>
-                <tr>
-                    <td>naturalWidth</td>
-                    <td>number</td>
-                    <td>auto</td>
-                    <td rowspan="2">You can provide the natural width and natural height of an image to speed up loading and reduce error when determining the correct aspect ratio of the image.</td>
-                </tr>
-                <tr>
-                    <td>naturalHeight</td>
-                    <td>number</td>
-                    <td>auto</td>
-                </tr>
-                <tr>
-                    <td>speed</td>
-                    <td>float</td>
-                    <td>0.2</td>
-                    <td>The speed at which the parallax effect runs. 0.0 means the image will appear fixed in place, and 1.0 the image will flow at the same speed as the page content.</td>
-                </tr>
-                <tr>
-                    <td>zIndex</td>
-                    <td>number</td>
-                    <td>-100</td>
-                    <td>The z-index value of the fixed-position elements.  By default these will be behind everything else on the page.</td>
-                </tr>
-                <tr>
-                    <td>bleed</td>
-                    <td>number</td>
-                    <td>0</td>
-                    <td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
-                </tr>
-                <tr>
-                    <td>iosFix</td>
-                    <td>boolean</td>
-                    <td>true</td>
-                    <td>iOS devices are incompatable with this plugin. If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. Disable this if you wish to implement your own graceful degradation.</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+              <thead>
+                  <tr>
+                      <th style="width: 100px;">Name</th>
+                      <th style="width: 100px;">type</th>
+                      <th style="width: 50px;">default</th>
+                      <th>description</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>imageSrc</td>
+                      <td>path</td>
+                      <td>null</td>
+                      <td>You must provide a path to the image you wish to apply to the parallax effect.</td>
+                  </tr>
+                  <tr>
+                      <td>naturalWidth</td>
+                      <td>number</td>
+                      <td>auto</td>
+                      <td rowspan="2">You can provide the natural width and natural height of an image to speed up loading and reduce error when determining the correct aspect ratio of the image.</td>
+                  </tr>
+                  <tr>
+                      <td>naturalHeight</td>
+                      <td>number</td>
+                      <td>auto</td>
+                  </tr>
+                  <tr>
+                      <td>speed</td>
+                      <td>float</td>
+                      <td>0.2</td>
+                      <td>The speed at which the parallax effect runs. 0.0 means the image will appear fixed in place, and 1.0 the image will flow at the same speed as the page content.</td>
+                  </tr>
+                  <tr>
+                      <td>zIndex</td>
+                      <td>number</td>
+                      <td>-100</td>
+                      <td>The z-index value of the fixed-position elements.  By default these will be behind everything else on the page.</td>
+                  </tr>
+                  <tr>
+                      <td>bleed</td>
+                      <td>number</td>
+                      <td>0</td>
+                      <td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
+                  </tr>
+                  <tr>
+                      <td>iosFix</td>
+                      <td>boolean</td>
+                      <td>true</td>
+                      <td>iOS devices are incompatable with this plugin. If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. Disable this if you wish to implement your own graceful degradation.</td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
