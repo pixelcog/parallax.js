@@ -14,10 +14,20 @@
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/parallax.min.js"></script>
     <script>
-      $(function(){ navigator.userAgent.match(/(iPod|iPhone|iPad)/) && $('#ios-notice').removeClass('hidden') });
+      $(function(){
+        if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+          $('#ios-notice').removeClass('hidden');
+          $('.parallax-container').height( $(window).height() * 0.5 | 0 );
+        } else {
+          $(window).resize(function(){
+            var parallaxHeight = Math.max($(window).height() * 0.7, 200) | 0;
+            $('.parallax-container').height(parallaxHeight);
+          }).trigger('resize');
+        }
+      });
     </script>
+    <script src="./js/parallax.min.js"></script>
   </head>
   <body>
     <section>
