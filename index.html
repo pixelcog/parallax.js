@@ -15,10 +15,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/parallax.min.js"></script>
+    <script>
+      $(function(){ navigator.userAgent.match(/(iPod|iPhone|iPad)/) && $('#ios-notice').removeClass('hidden') });
+    </script>
   </head>
   <body>
     <section>
       <div class="container">
+        <div id="ios-notice" class="alert alert-info hidden"><p><strong>Notice:</strong> Hello iOS user. Unfortunately, this parallax effect cannot be achieved on iOS devices, so all you will see on this demo page are static backgrounds.  Please visit this page on a desktop browser to see its full effect.</p></div>
         <h1>Simple Parallax Scrolling <small>parallax.js</small></h1>
         <p>Parallax.js is a dirt simple parallax scrolling effect inspired by <a href="http://spotify.com">Spotify.com</a> and implemented as a jQuery plugin.</p>
         <a href="https://github.com/pixelcog/parallax.js/archive/v1.0.zip" class="btn btn-default download-link">Download Parallax.js v1.0</a>
