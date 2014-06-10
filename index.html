@@ -35,12 +35,12 @@
         <div id="ios-notice" class="alert alert-info hidden"><p><strong>Notice:</strong> Hello iOS user. Unfortunately, this parallax effect cannot be achieved on iOS devices, so all you will see on this demo page are static backgrounds.  Please visit this page on a desktop browser to see its full effect.</p></div>
         <h1>Simple Parallax Scrolling <small>parallax.js</small></h1>
         <p>Parallax.js is a dirt simple parallax scrolling effect inspired by <a href="http://spotify.com">Spotify.com</a> and implemented as a jQuery plugin.</p>
-        <a href="https://github.com/pixelcog/parallax.js/archive/v1.0.zip" class="btn btn-default download-link">Download Parallax.js v1.0</a>
+        <a href="https://github.com/pixelcog/parallax.js/archive/v1.1.zip" class="btn btn-default download-link">Download Parallax.js v1.1</a>
         <a href="https://github.com/pixelcog/parallax.js/" class="btn btn-default">View on GitHub</a>
       </div>
     </section>
 
-    <div class="parallax-container" data-parallax="scroll" data-bleed="10" data-image-src="./img/stellar-spire-eagle-nebula-1400x900.jpg" data-natural-width="1400" data-natural-height="900"></div>
+    <div class="parallax-container" data-parallax="scroll" data-position="top" data-bleed="10" data-image-src="./img/stellar-spire-eagle-nebula-1400x900.jpg" data-natural-width="1400" data-natural-height="900"></div>
 
     <section>
       <div class="container">
@@ -117,6 +117,22 @@
                       <td>naturalHeight</td>
                       <td>number</td>
                       <td>auto</td>
+                  </tr>
+                  <tr>
+                      <td>position</td>
+                      <td>xPos yPos</td>
+                      <td>center center</td>
+                      <td rowspan="3">This is analogous to the background-position css property. Specify coordinates as top, bottom, right, left, center, or pixel values (i.e. -10px 0px). The parallax image will be positioned as close to these values as possible while still covering the target element.</td>
+                  </tr>
+                  <tr>
+                      <td>positionX</td>
+                      <td>xPos</td>
+                      <td>center</td>
+                  </tr>
+                  <tr>
+                      <td>positionY</td>
+                      <td>yPos</td>
+                      <td>center</td>
                   </tr>
                   <tr>
                       <td>speed</td>

@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.0 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.1 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -55,12 +55,53 @@
       this.imageSrc = this.$element.attr('src');
     }
 
+    var positions = (this.position + '').toLowerCase().match(/\S+/g) || [];
+
+    if (positions.length < 1) {
+      positions.push('center');
+    }
+    if (positions.length == 1) {
+      positions.push(positions[0]);
+    }
+
+    if (positions[0] == 'top' || positions[0] == 'bottom' ||
+        positions[1] == 'left' || positions[1] == 'right') {
+      self.positionX = positions[1];
+      self.positionY = positions[0];
+    } else {
+      self.positionX = positions[0];
+      self.positionY = positions[1];
+    }
+
+    if (this.positionX != undefined) positions[0] = this.positionX.toLowerCase();
+    if (this.positionY != undefined) positions[1] = this.positionY.toLowerCase();
+
+    if (this.positionX != 'left' && this.positionX != 'right') {
+      if (isNaN(parseInt(this.positionX))) {
+        this.positionX = 'center';
+      } else {
+        this.positionX = parseInt(this.positionX);
+      }
+    }
+
+    if (this.positionY != 'top' && this.positionY != 'bottom') {
+      if (isNaN(parseInt(this.positionY))) {
+        this.positionY = 'center';
+      } else {
+        this.positionY = parseInt(this.positionY);
+      }
+    }
+
+    this.position =
+      this.positionX + (isNaN(this.positionX)? '' : 'px') + ' ' +
+      this.positionY + (isNaN(this.positionY)? '' : 'px');
+
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.iosFix && !this.$element.is('img')) {
         this.$element.css({
           backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: this.position
         });
       }
       return this;
@@ -103,10 +144,11 @@
   // Parallax Instance Methods
 
   $.extend(Parallax.prototype, {
-    speed:  0.2,
-    bleed:  0,
-    zIndex: -100,
-    iosFix: true,
+    speed:    0.2,
+    bleed:    0,
+    zIndex:   -100,
+    iosFix:   true,
+	position: 'center',
 
     refresh: function() {
       this.boxWidth        = this.$element.width();
@@ -115,19 +157,42 @@
       this.boxOffsetLeft   = this.$element.offset().left;
       this.boxOffsetBottom = this.boxOffsetTop + this.boxHeight;
 
+      var margin = 0;
       var winHeight = Parallax.winHeight;
       var imageHeightMin = winHeight - (winHeight - this.boxHeight) * this.speed | 0;
 
       if (imageHeightMin * this.aspectRatio >= this.boxWidth) {
         this.imageWidth    = imageHeightMin * this.aspectRatio | 0;
         this.imageHeight   = imageHeightMin;
-        this.offsetLeft    = (this.boxWidth - this.imageWidth) / 2 | 0;
         this.offsetBaseTop = 0;
+
+        margin = this.imageWidth - this.boxWidth;
+
+        if (this.positionX == 'left') {
+          this.offsetLeft = 0;
+        } else if (this.positionX == 'right') {
+          this.offsetLeft = - margin;
+        } else if (!isNaN(this.positionX)) {
+          this.offsetLeft = Math.max(this.positionX, - margin);
+        } else {
+          this.offsetLeft = - margin / 2 | 0;
+        }
       } else {
         this.imageWidth    = this.boxWidth;
         this.imageHeight   = this.boxWidth / this.aspectRatio | 0;
         this.offsetLeft    = 0;
-        this.offsetBaseTop = (imageHeightMin - this.imageHeight) / 2 | 0;
+
+        margin = this.imageHeight - imageHeightMin;
+
+        if (this.positionY == 'top') {
+          this.offsetBaseTop = 0;
+        } else if (this.positionY == 'bottom') {
+          this.offsetBaseTop = - margin;
+        } else if (!isNaN(this.positionY)) {
+          this.offsetBaseTop = Math.max(this.positionY, - margin);
+        } else {
+          this.offsetBaseTop = - margin / 2 | 0;
+        }
       }
     },
 
@@ -169,12 +234,12 @@
   // Parallax Static Methods
 
   $.extend(Parallax, {
-    scrollTop:    $window.scrollTop(),
-    scrollLeft:   $window.scrollLeft(),
+    scrollTop:    0,
+    scrollLeft:   0,
     winHeight:    0,
     winWidth:     0,
-    docHeight:    0,
-    docWidth:     0,
+    docHeight:    1 << 30,
+    docWidth:     1 << 30,
     sliders:      [],
     isReady:      false,
     isFresh:      false,
@@ -184,14 +249,14 @@
       if (this.isReady) return;
 
       $window
-        .on('scroll.px.parallax load.px.parallax', function(){
+        .on('scroll.px.parallax load.px.parallax', function() {
           var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
           Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax, $window.scrollTop()));
           Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $window.scrollLeft()));
           Parallax.requestRender();
         })
-        .on('resize.px.parallax load.px.parallax', function(){
+        .on('resize.px.parallax load.px.parallax', function() {
           Parallax.winHeight = $window.height();
           Parallax.winWidth  = $window.width();
           Parallax.docHeight = $(document).height();
