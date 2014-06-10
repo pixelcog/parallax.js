@@ -70,6 +70,22 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>auto</td>
 		</tr>
 		<tr>
+			<td>position</td>
+			<td>xPos yPos</td>
+			<td>center center</td>
+			<td rowspan="3">This is analogous to the background-position css property. Specify coordinates as top, bottom, right, left, center, or pixel values (i.e. -10px 0px). The parallax image will be positioned as close to these values as possible while still covering the target element.</td>
+		</tr>
+		<tr>
+			<td>positionX</td>
+			<td>xPos</td>
+			<td>center</td>
+		</tr>
+		<tr>
+			<td>positionY</td>
+			<td>yPos</td>
+			<td>center</td>
+		</tr>
+		<tr>
 			<td>speed</td>
 			<td>float</td>
 			<td>0.2</td>
