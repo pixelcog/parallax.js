@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.0 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.0.1 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -169,12 +169,12 @@
   // Parallax Static Methods
 
   $.extend(Parallax, {
-    scrollTop:    $window.scrollTop(),
-    scrollLeft:   $window.scrollLeft(),
+    scrollTop:    0,
+    scrollLeft:   0,
     winHeight:    0,
     winWidth:     0,
-    docHeight:    0,
-    docWidth:     0,
+    docHeight:    1 << 30,
+    docWidth:     1 << 30,
     sliders:      [],
     isReady:      false,
     isFresh:      false,
@@ -184,14 +184,14 @@
       if (this.isReady) return;
 
       $window
-        .on('scroll.px.parallax load.px.parallax', function(){
+        .on('scroll.px.parallax load.px.parallax', function() {
           var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
           Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax, $window.scrollTop()));
           Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $window.scrollLeft()));
           Parallax.requestRender();
         })
-        .on('resize.px.parallax load.px.parallax', function(){
+        .on('resize.px.parallax load.px.parallax', function() {
           Parallax.winHeight = $window.height();
           Parallax.winWidth  = $window.width();
           Parallax.docHeight = $(document).height();
