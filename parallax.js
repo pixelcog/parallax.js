@@ -99,7 +99,7 @@
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.iosFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
+          backgroundImage: 'url(' + this.imageSrc + ')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
