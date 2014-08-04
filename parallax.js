@@ -99,13 +99,26 @@
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.iosFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
+          backgroundImage: 'url(' + this.imageSrc + ')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
       }
       return this;
     }
+    
+    if (navigator.userAgent.match(/(Android)/)) {
+      if (this.androidFix && !this.$element.is('img')) {
+        this.$element.css({
+          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: this.position
+        });
+      }
+      return this;
+    }
+
+
 
     this.$mirror = $('<div />').prependTo('body');
     this.$slider = $('<img />').prependTo(this.$mirror);
@@ -148,7 +161,8 @@
     bleed:    0,
     zIndex:   -100,
     iosFix:   true,
-	position: 'center',
+    androidFix:   true,
+  position: 'center',
 
     refresh: function() {
       this.boxWidth        = this.$element.width();
