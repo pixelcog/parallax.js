@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.1 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.2 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -99,7 +99,7 @@
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.iosFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
@@ -109,6 +109,8 @@
 
     this.$mirror = $('<div />').prependTo('body');
     this.$slider = $('<img />').prependTo(this.$mirror);
+
+    this.$textContent = $(this.innerHtml).prependTo(this.$mirror);
 
     this.$mirror.addClass('parallax-mirror').css({
       visibility: 'hidden',
@@ -227,6 +229,16 @@
         height: this.imageHeight,
         width: this.imageWidth
       });
+
+      this.$textContent.css({
+      	transform: 'translate3d(0px, 0px, 0px)',
+      	position: 'absolute',
+      	top: this.offsetTop,
+      	left: this.offsetLeft,
+      	height: this.imageHeight,
+      	width: this.imageWidth,
+		zIndex: 99
+      });
     }
   });
 
@@ -311,7 +323,8 @@
         Parallax.configure(options);
       }
       else if (!$this.data('px.parallax')) {
-        options = $.extend({}, $this.data(), options);
+      	options = $.extend({}, $this.data(), options);
+      	options.innerHtml = $this.html();
         $this.data('px.parallax', new Parallax(this, options));
       }
       if (typeof option == 'string') {
