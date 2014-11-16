@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.1 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.2 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -99,7 +99,18 @@
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.iosFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + encodeURIComponent(this.imageSrc) + ')',
+          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: this.position
+        });
+      }
+      return this;
+    }
+
+    if (navigator.userAgent.match(/(Android)/)) {
+      if (this.androidFix && !this.$element.is('img')) {
+        this.$element.css({
+          backgroundImage: 'url(' + this.imageSrc + ')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
@@ -148,7 +159,8 @@
     bleed:    0,
     zIndex:   -100,
     iosFix:   true,
-	position: 'center',
+    androidFix: true,
+    position: 'center',
 
     refresh: function() {
       this.boxWidth        = this.$element.width();
