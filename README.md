@@ -109,6 +109,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>true</td>
 			<td>iOS devices are incompatable with this plugin. If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. Disable this if you wish to implement your own graceful degradation.</td>
 		</tr>
+		<tr>
+			<td>androidFix</td>
+			<td>boolean</td>
+			<td>true</td>
+			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an Android user agent. Disable this if you wish to enable the parallax scrolling effect on Android devices.</td>
+		</tr>
 	</tbody>
 </table>
 
