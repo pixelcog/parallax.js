@@ -27,7 +27,7 @@ To call the parallax plugin manually, simply select your target element with jQu
 
 ### Notes
 
-What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body. This mirror element will sit behind the other elements and match the position and dimensions of it's target object.
+What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body. This mirror element will sit behind the other elements and match the position and dimensions of its target object.
 
 Due to the nature of this implementation, you must ensure that these parallax objects and any layers below them are transparent so that you can see the parallax effect underneath.  Also, if there is no other content in this element, you will need to ensure that it has some fixed dimensions otherwise you won't see anything.
 
@@ -40,7 +40,7 @@ Due to the nature of this implementation, you must ensure that these parallax ob
 
 Options can be passed in via data attributes of JavaScript.  For data attributes, append the option name to `data-`, as in `data-image-src=""`.
 
-Note that when specifying these options as html data-attributes, you should convert "camelCased" variable names into "dash-separated" lower-case names (i.e. `zIndex` would be `data-z-index=""`).
+Note that when specifying these options as html data-attributes, you should convert "camelCased" variable names into "dash-separated" lower-case names (e.g. `zIndex` would be `data-z-index=""`).
 
 <table class="table table-bordered table-striped">
 	<thead>
@@ -73,7 +73,7 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>position</td>
 			<td>xPos yPos</td>
 			<td>center center</td>
-			<td rowspan="3">This is analogous to the background-position css property. Specify coordinates as top, bottom, right, left, center, or pixel values (i.e. -10px 0px). The parallax image will be positioned as close to these values as possible while still covering the target element.</td>
+			<td rowspan="3">This is analogous to the background-position css property. Specify coordinates as top, bottom, right, left, center, or pixel values (e.g. -10px 0px). The parallax image will be positioned as close to these values as possible while still covering the target element.</td>
 		</tr>
 		<tr>
 			<td>positionX</td>
