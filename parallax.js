@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.2 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.2.1 (http://pixelcog.github.io/parallax.js/)
  * Copyright (c) 2014 PixelCog, Inc.
  * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -163,8 +163,8 @@
     position: 'center',
 
     refresh: function() {
-      this.boxWidth        = this.$element.width();
-      this.boxHeight       = this.$element.height() + this.bleed * 2;
+      this.boxWidth        = this.$element.outerWidth();
+      this.boxHeight       = this.$element.outerHeight() + this.bleed * 2;
       this.boxOffsetTop    = this.$element.offset().top - this.bleed;
       this.boxOffsetLeft   = this.$element.offset().left;
       this.boxOffsetBottom = this.boxOffsetTop + this.boxHeight;
