@@ -158,6 +158,7 @@
     iosFix:   true,
     androidFix: true,
     position: 'center',
+    overScrollFix: false,
 
     refresh: function() {
       this.boxWidth        = this.$element.outerWidth();
@@ -211,6 +212,7 @@
     render: function() {
       var scrollTop    = Parallax.scrollTop;
       var scrollLeft   = Parallax.scrollLeft;
+      var overScroll   = this.overScrollFix ? Parallax.overScroll : 0;
       var scrollBottom = scrollTop + Parallax.winHeight;
 
       if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop < scrollBottom) {
@@ -225,7 +227,7 @@
       this.$mirror.css({
         transform: 'translate3d(0px, 0px, 0px)',
         visibility: this.visibility,
-        top: this.mirrorTop,
+        top: this.mirrorTop - overScroll,
         left: this.mirrorLeft,
         height: this.boxHeight,
         width: this.boxWidth
@@ -267,6 +269,7 @@
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
           Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
           Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+          Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min($win.scrollTop(), 0));
           Parallax.requestRender();
         })
         .on('resize.px.parallax load.px.parallax', function() {
