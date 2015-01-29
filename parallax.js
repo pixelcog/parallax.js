@@ -169,16 +169,19 @@
       this.boxOffsetLeft   = this.$element.offset().left;
       this.boxOffsetBottom = this.boxOffsetTop + this.boxHeight;
 
-      var margin = 0;
       var winHeight = Parallax.winHeight;
-      var imageHeightMin = winHeight - (winHeight - this.boxHeight) * this.speed | 0;
+      var docHeight = Parallax.docHeight;
+      var maxOffset = Math.min(this.boxOffsetTop, docHeight - winHeight);
+      var minOffset = Math.max(this.boxOffsetTop + this.boxHeight - winHeight, 0);
+      var imageHeightMin = this.boxHeight + (maxOffset - minOffset) * (1 - this.speed) | 0;
+      var imageOffsetMin = (this.boxOffsetTop - maxOffset) * (1 - this.speed) | 0;
 
       if (imageHeightMin * this.aspectRatio >= this.boxWidth) {
         this.imageWidth    = imageHeightMin * this.aspectRatio | 0;
         this.imageHeight   = imageHeightMin;
-        this.offsetBaseTop = 0;
+        this.offsetBaseTop = imageOffsetMin;
 
-        margin = this.imageWidth - this.boxWidth;
+        var margin = this.imageWidth - this.boxWidth;
 
         if (this.positionX == 'left') {
           this.offsetLeft = 0;
@@ -194,16 +197,16 @@
         this.imageHeight   = this.boxWidth / this.aspectRatio | 0;
         this.offsetLeft    = 0;
 
-        margin = this.imageHeight - imageHeightMin;
+        var margin = this.imageHeight - imageHeightMin;
 
         if (this.positionY == 'top') {
-          this.offsetBaseTop = 0;
+          this.offsetBaseTop = imageOffsetMin;
         } else if (this.positionY == 'bottom') {
-          this.offsetBaseTop = - margin;
+          this.offsetBaseTop = imageOffsetMin - margin;
         } else if (!isNaN(this.positionY)) {
-          this.offsetBaseTop = Math.max(this.positionY, - margin);
+          this.offsetBaseTop = imageOffsetMin + Math.max(this.positionY, - margin);
         } else {
-          this.offsetBaseTop = - margin / 2 | 0;
+          this.offsetBaseTop = imageOffsetMin - margin / 2 | 0;
         }
       }
     },
