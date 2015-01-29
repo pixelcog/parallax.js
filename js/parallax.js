@@ -1,7 +1,7 @@
 /*!
- * parallax.js v1.2 (http://pixelcog.github.io/parallax.js/)
- * Copyright (c) 2014 PixelCog, Inc.
- * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
+ * parallax.js v1.3 (http://pixelcog.github.io/parallax.js/)
+ * @copyright 2015 PixelCog, Inc.
+ * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
 
 ;(function ( $, window, document, undefined ) {
@@ -19,7 +19,7 @@
     }
 
     if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function(callback, element) {
+      window.requestAnimationFrame = function(callback) {
         var currTime = new Date().getTime();
         var timeToCall = Math.max(0, 16 - (currTime - lastTime));
         var id = window.setTimeout(function() { callback(currTime + timeToCall); },
@@ -36,9 +36,6 @@
 
 
   // Parallax Constructor
-
-  var $body = $('body');
-  var $window = $(window);
 
   function Parallax(element, options) {
     var self = this;
@@ -163,22 +160,25 @@
     position: 'center',
 
     refresh: function() {
-      this.boxWidth        = this.$element.width();
-      this.boxHeight       = this.$element.height() + this.bleed * 2;
+      this.boxWidth        = this.$element.outerWidth();
+      this.boxHeight       = this.$element.outerHeight() + this.bleed * 2;
       this.boxOffsetTop    = this.$element.offset().top - this.bleed;
       this.boxOffsetLeft   = this.$element.offset().left;
       this.boxOffsetBottom = this.boxOffsetTop + this.boxHeight;
 
-      var margin = 0;
       var winHeight = Parallax.winHeight;
-      var imageHeightMin = winHeight - (winHeight - this.boxHeight) * this.speed | 0;
+      var docHeight = Parallax.docHeight;
+      var maxOffset = Math.min(this.boxOffsetTop, docHeight - winHeight);
+      var minOffset = Math.max(this.boxOffsetTop + this.boxHeight - winHeight, 0);
+      var imageHeightMin = this.boxHeight + (maxOffset - minOffset) * (1 - this.speed) | 0;
+      var imageOffsetMin = (this.boxOffsetTop - maxOffset) * (1 - this.speed) | 0;
 
       if (imageHeightMin * this.aspectRatio >= this.boxWidth) {
         this.imageWidth    = imageHeightMin * this.aspectRatio | 0;
         this.imageHeight   = imageHeightMin;
-        this.offsetBaseTop = 0;
+        this.offsetBaseTop = imageOffsetMin;
 
-        margin = this.imageWidth - this.boxWidth;
+        var margin = this.imageWidth - this.boxWidth;
 
         if (this.positionX == 'left') {
           this.offsetLeft = 0;
@@ -194,16 +194,16 @@
         this.imageHeight   = this.boxWidth / this.aspectRatio | 0;
         this.offsetLeft    = 0;
 
-        margin = this.imageHeight - imageHeightMin;
+        var margin = this.imageHeight - imageHeightMin;
 
         if (this.positionY == 'top') {
-          this.offsetBaseTop = 0;
+          this.offsetBaseTop = imageOffsetMin;
         } else if (this.positionY == 'bottom') {
-          this.offsetBaseTop = - margin;
+          this.offsetBaseTop = imageOffsetMin - margin;
         } else if (!isNaN(this.positionY)) {
-          this.offsetBaseTop = Math.max(this.positionY, - margin);
+          this.offsetBaseTop = imageOffsetMin + Math.max(this.positionY, - margin);
         } else {
-          this.offsetBaseTop = - margin / 2 | 0;
+          this.offsetBaseTop = imageOffsetMin - margin / 2 | 0;
         }
       }
     },
@@ -260,19 +260,20 @@
     setup: function() {
       if (this.isReady) return;
 
-      $window
-        .on('scroll.px.parallax load.px.parallax', function() {
+      var $doc = $(document), $win = $(window);
+
+      $win.on('scroll.px.parallax load.px.parallax', function() {
           var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
-          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax, $window.scrollTop()));
-          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $window.scrollLeft()));
+          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
+          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
           Parallax.requestRender();
         })
         .on('resize.px.parallax load.px.parallax', function() {
-          Parallax.winHeight = $window.height();
-          Parallax.winWidth  = $window.width();
-          Parallax.docHeight = $(document).height();
-          Parallax.docWidth  = $(document).width();
+          Parallax.winHeight = $win.height();
+          Parallax.winWidth  = $win.width();
+          Parallax.docHeight = $doc.height();
+          Parallax.docWidth  = $doc.width();
           Parallax.isFresh = false;
           Parallax.requestRender();
         });
