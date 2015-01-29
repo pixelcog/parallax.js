@@ -120,11 +120,11 @@ Note that when specifying these options as html data-attributes, you should conv
 
 ## Contributing
 
-If you have a pull request you would like to submit, please ensure that you update the minified version of the library along with your code changes.  This project uses [uglifyjs]() to perform code compression.
+If you have a pull request you would like to submit, please ensure that you update the minified version of the library along with your code changes.  This project uses [uglifyjs](https://www.npmjs.com/package/uglify-js) to perform code compression.
 
 Please use the following command:
 
-		uglifyjs parallax.js --comments -m -c -o parallax.min.js
+	uglifyjs parallax.js --comments -m -c -o parallax.min.js
 
 
 LICENSE
