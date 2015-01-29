@@ -19,7 +19,7 @@
     }
 
     if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function(callback, element) {
+      window.requestAnimationFrame = function(callback) {
         var currTime = new Date().getTime();
         var timeToCall = Math.max(0, 16 - (currTime - lastTime));
         var id = window.setTimeout(function() { callback(currTime + timeToCall); },
@@ -36,9 +36,6 @@
 
 
   // Parallax Constructor
-
-  var $body = $('body');
-  var $window = $(window);
 
   function Parallax(element, options) {
     var self = this;
@@ -263,19 +260,20 @@
     setup: function() {
       if (this.isReady) return;
 
-      $window
-        .on('scroll.px.parallax load.px.parallax', function() {
+      var $doc = $(document), $win = $(window);
+
+      $win.on('scroll.px.parallax load.px.parallax', function() {
           var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
-          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax, $window.scrollTop()));
-          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $window.scrollLeft()));
+          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
+          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
           Parallax.requestRender();
         })
         .on('resize.px.parallax load.px.parallax', function() {
-          Parallax.winHeight = $window.height();
-          Parallax.winWidth  = $window.width();
-          Parallax.docHeight = $(document).height();
-          Parallax.docWidth  = $(document).width();
+          Parallax.winHeight = $win.height();
+          Parallax.winWidth  = $win.width();
+          Parallax.docHeight = $doc.height();
+          Parallax.docWidth  = $doc.width();
           Parallax.isFresh = false;
           Parallax.requestRender();
         });
