@@ -1,7 +1,7 @@
 /*!
  * parallax.js v1.2.1 (http://pixelcog.github.io/parallax.js/)
- * Copyright (c) 2014 PixelCog, Inc.
- * Licensed under MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
+ * @copyright 2014 PixelCog, Inc.
+ * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
 
 ;(function ( $, window, document, undefined ) {
