@@ -237,7 +237,8 @@
         top: this.offsetTop,
         left: this.offsetLeft,
         height: this.imageHeight,
-        width: this.imageWidth
+        width: this.imageWidth,
+        maxWidth: 'none'
       });
     }
   });
