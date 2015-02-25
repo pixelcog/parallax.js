@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.3 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.3.1 (http://pixelcog.github.io/parallax.js/)
  * @copyright 2015 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -61,17 +61,15 @@
       positions.push(positions[0]);
     }
 
-    if (positions[0] == 'top' || positions[0] == 'bottom' ||
-        positions[1] == 'left' || positions[1] == 'right') {
-      self.positionX = positions[1];
-      self.positionY = positions[0];
-    } else {
-      self.positionX = positions[0];
-      self.positionY = positions[1];
+    if (positions[0] == 'top' || positions[0] == 'bottom' || positions[1] == 'left' || positions[1] == 'right') {
+      positions = [positions[1], positions[0]];
     }
 
     if (this.positionX != undefined) positions[0] = this.positionX.toLowerCase();
     if (this.positionY != undefined) positions[1] = this.positionY.toLowerCase();
+
+    self.positionX = positions[0];
+    self.positionY = positions[1];
 
     if (this.positionX != 'left' && this.positionX != 'right') {
       if (isNaN(parseInt(this.positionX))) {
@@ -158,6 +156,7 @@
     iosFix:   true,
     androidFix: true,
     position: 'center',
+    overScrollFix: false,
 
     refresh: function() {
       this.boxWidth        = this.$element.outerWidth();
@@ -211,6 +210,7 @@
     render: function() {
       var scrollTop    = Parallax.scrollTop;
       var scrollLeft   = Parallax.scrollLeft;
+      var overScroll   = this.overScrollFix ? Parallax.overScroll : 0;
       var scrollBottom = scrollTop + Parallax.winHeight;
 
       if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop < scrollBottom) {
@@ -225,7 +225,7 @@
       this.$mirror.css({
         transform: 'translate3d(0px, 0px, 0px)',
         visibility: this.visibility,
-        top: this.mirrorTop,
+        top: this.mirrorTop - overScroll,
         left: this.mirrorLeft,
         height: this.boxHeight,
         width: this.boxWidth
@@ -237,7 +237,8 @@
         top: this.offsetTop,
         left: this.offsetLeft,
         height: this.imageHeight,
-        width: this.imageWidth
+        width: this.imageWidth,
+        maxWidth: 'none'
       });
     }
   });
@@ -267,6 +268,7 @@
           var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
           Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
           Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+          Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min($win.scrollTop(), 0));
           Parallax.requestRender();
         })
         .on('resize.px.parallax load.px.parallax', function() {
