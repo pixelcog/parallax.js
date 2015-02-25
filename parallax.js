@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.3 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.3.1 (http://pixelcog.github.io/parallax.js/)
  * @copyright 2015 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -61,17 +61,15 @@
       positions.push(positions[0]);
     }
 
-    if (positions[0] == 'top' || positions[0] == 'bottom' ||
-        positions[1] == 'left' || positions[1] == 'right') {
-      self.positionX = positions[1];
-      self.positionY = positions[0];
-    } else {
-      self.positionX = positions[0];
-      self.positionY = positions[1];
+    if (positions[0] == 'top' || positions[0] == 'bottom' || positions[1] == 'left' || positions[1] == 'right') {
+      positions = [positions[1], positions[0]];
     }
 
     if (this.positionX != undefined) positions[0] = this.positionX.toLowerCase();
     if (this.positionY != undefined) positions[1] = this.positionY.toLowerCase();
+
+    self.positionX = positions[0];
+    self.positionY = positions[1];
 
     if (this.positionX != 'left' && this.positionX != 'right') {
       if (isNaN(parseInt(this.positionX))) {
