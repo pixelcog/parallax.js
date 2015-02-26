@@ -123,6 +123,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>true</td>
 			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an Android user agent. Disable this if you wish to enable the parallax scrolling effect on Android devices.</td>
 		</tr>
+		<tr>
+			<td>overScrollFix</td>
+			<td>boolean</td>
+			<td>false</td>
+			<td>(Experimental) If true, will freeze the parallax effect when "over scrolling" in browsers like Safari to prevent unexpected gaps caused by negative scroll positions.</td>
+		</tr>
 	</tbody>
 </table>
 
