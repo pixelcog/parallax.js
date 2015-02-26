@@ -44,6 +44,12 @@ Due to the nature of this implementation, you must ensure that these parallax ob
 }
 ```
 
+Also, keep in mind that once initialized, the parallax plugin presumes a fixed page layout unless it encounters a `scroll` or `resize` event.  If you have a dynamic page in which another javascript method may alter the DOM, you must manually refresh the parallax effect with the following commands:
+
+```javascript
+jQuery(window).trigger('resize').trigger('scroll');
+```
+
 ## Options
 
 Options can be passed in via data attributes of JavaScript.  For data attributes, append the option name to `data-`, as in `data-image-src=""`.
