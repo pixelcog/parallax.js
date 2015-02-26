@@ -8,8 +8,10 @@ Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) 
 
 Download and include `parallax.min.js` in your document after including jQuery.
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="/path/to/parallax.js"></script>
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/path/to/parallax.min.js"></script>
+```
 
 ## Usage
 
@@ -17,13 +19,17 @@ Download and include `parallax.min.js` in your document after including jQuery.
 
 To easily add a parallax effect behind an element, add `data-parallax="scroll"` to the element you want to use, and specify an image with `data-image-src="/path/to/image.jpg"`.
 
-	<div class="parallax-window" data-parallax="scroll" data-image-src="/path/to/image.jpg"></div>
+```html
+<div class="parallax-window" data-parallax="scroll" data-image-src="/path/to/image.jpg"></div>
+```
 
 ### Via JavaScript
 
 To call the parallax plugin manually, simply select your target element with jQuery and do the following:
 
-	$('.parallax-window').parallax({imageSrc: '/path/to/image.jpg'});
+```javascript
+$('.parallax-window').parallax({imageSrc: '/path/to/image.jpg'});
+```
 
 ### Notes
 
@@ -31,10 +37,12 @@ What parallax.js will do is create a fixed-position element for each parallax im
 
 Due to the nature of this implementation, you must ensure that these parallax objects and any layers below them are transparent so that you can see the parallax effect underneath.  Also, if there is no other content in this element, you will need to ensure that it has some fixed dimensions otherwise you won't see anything.
 
-	.parallax-window {
-		min-height: 400px;
-		background: transparent;
-	}
+```css
+.parallax-window {
+	min-height: 400px;
+	background: transparent;
+}
+```
 
 ## Options
 
