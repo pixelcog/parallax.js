@@ -263,20 +263,20 @@
 
       var $doc = $(document), $win = $(window);
 
-      $win.on('scroll.px.parallax load.px.parallax', function() {
-          var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
-          var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
-          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
-          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
-          Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min($win.scrollTop(), 0));
-          Parallax.requestRender();
-        })
-        .on('resize.px.parallax load.px.parallax', function() {
+      $win.on('resize.px.parallax load.px.parallax', function() {
           Parallax.winHeight = $win.height();
           Parallax.winWidth  = $win.width();
           Parallax.docHeight = $doc.height();
           Parallax.docWidth  = $doc.width();
           Parallax.isFresh = false;
+          Parallax.requestRender();
+        })
+        .on('scroll.px.parallax load.px.parallax', function() {
+          var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
+          var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
+          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
+          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+          Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min($win.scrollTop(), 0));
           Parallax.requestRender();
         });
 
