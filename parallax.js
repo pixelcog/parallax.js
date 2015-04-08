@@ -329,6 +329,10 @@
         options = $.extend({}, $this.data(), options);
         $this.data('px.parallax', new Parallax(this, options));
       }
+      else if (typeof option == 'object')
+      {
+        $.extend($this.data('px.parallax'), options);
+      }
       if (typeof option == 'string') {
         Parallax[option]();
       }
