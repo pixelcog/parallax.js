@@ -1,7 +1,7 @@
 Parallax.js
 ===========
 
-Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) implemented as a jQuery plugin  
+Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) implemented as a jQuery plugin
 [http://pixelcog.com/parallax.js/](http://pixelcog.com/parallax.js/)
 
 ## Installation
@@ -21,6 +21,15 @@ To easily add a parallax effect behind an element, add `data-parallax="scroll"` 
 
 ```html
 <div class="parallax-window" data-parallax="scroll" data-image-src="/path/to/image.jpg"></div>
+```
+
+To make a parallax element responsive, add ```span``` child elements and specify an image with ```data-image-src="/path/to/image.jpg"``` and its corresponding media query with ```data-media-query="<media query>"```. Media queries are tested with [Modernizr.mq](http://modernizr.com/docs/#mq).
+```html
+<div class="parallax-window" data-parallax="scroll" data-responsive="true">
+  <span data-image-src="/path/to/image-767x767.jpg" data-media-query="(min-width: 767px)"></span>
+  <span data-image-src="/path/to/image-1024x1024.jpg" data-media-query="(min-width: 1024px)"></span>
+  <span data-image-src="/path/to/image-1200x1200.jpg" data-media-query="(min-width: 1200px)"></span>
+</div>
 ```
 
 ### Via JavaScript
@@ -116,6 +125,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>number</td>
 			<td>0</td>
 			<td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
+		</tr>
+		<tr>
+			<td>responsive</td>
+			<td>boolean</td>
+			<td>false</td>
+			<td>If true, this option will look for nested <code>&lt;span&gt;&lt;/span&gt;</code> elements with responsive information. Each nested span should specify an image with <code>data-image-src="/path/to/image.jpg"</code> and its corresponding media query with <code>data-media-query="(max-width: 768px)"</code>. Media queries are tested with <a href="http://modernizr.com/docs/#mq" target="_blank">Modernizr.mq</a>. If set to true and no span children elements are found, the specified image source on the parallax element will be used and it will not be responsive. The parallax mirror aspect ratio will be updated as the images are updated.</td>
 		</tr>
 		<tr>
 			<td>iosFix</td>
