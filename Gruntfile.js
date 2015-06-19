@@ -2,10 +2,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-                ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-                ' * @copyright <%= grunt.template.today("yyyy") %> PixelCog, Inc.\n' +
-                ' * @license <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
-                ' */\n',
+            ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' * @copyright <%= grunt.template.today("yyyy") %> PixelCog, Inc.\n' +
+            ' * @license <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+            ' */\n',
     concat: {
       options: {
         separator: '\n',
