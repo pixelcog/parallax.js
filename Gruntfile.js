@@ -2,16 +2,16 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-                ' * <%= pkg.name %> v<%= pkg.version %>\n' +
+                ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+                ' * @copyright <%= grunt.template.today("yyyy") %> PixelCog, Inc.\n' +
                 ' * @license <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
-                ' * <%= grunt.template.today("yyyy") %>\n' +
                 ' */\n',
     concat: {
       options: {
         separator: '\n',
         stripBanners: false
       },
-      modernizr: {
+      add_modernizr: {
         src: ['vendor/modernizr.mq.min.js', 'lib/parallax.js'],
         dest: 'lib/parallax.mq.js'
       },
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     watch: {
       lib: {
         files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'concat:modernizr']
+        tasks: ['jshint:lib', 'concat:add_modernizr']
       }
     },
   });
@@ -57,5 +57,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task. Build.
-  grunt.registerTask('default', ['jshint', 'uglify:dist', 'concat:modernizr', 'concat:dist']);
+  grunt.registerTask('default', ['jshint', 'uglify:dist', 'concat:add_modernizr', 'concat:dist']);
 };

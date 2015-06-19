@@ -2,28 +2,38 @@
   "name": "parallax.js",
   "description": "Simple parallax scrolling effect inspired by spotify.com implemented as a jQuery plugin",
   "version": "1.3.3",
-  "homepage": "",
-  "authors": [
-    "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
-    "Stefanie Hatcher <stefhatcher@gmail.com> (http://stefhatcher.com)"
+  "homepage": "http://pixelcog.github.io/parallax.js/",
+  "author": "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
+  "contributors": [
+    {
+      "name": "Stefanie Hatcher",
+      "email": "stefhatcher@gmail.com"
+    }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/stefhatcher/parallax.js.git"
+    "url": "https://github.com/pixelcog/parallax.js.git"
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/stefhatcher/parallax.js/blob/master/LICENSE"
+    "url": "https://github.com/pixelcog/parallax.js/blob/master/LICENSE"
   },
   "main": "lib/parallax.mq.min.js",
   "engines": {
     "node": ">= 0.10.0"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-watch": "~0.4.0"
   },
-  "keywords": ["parallax", "scroll", "scrolling", "image", "responsive"]
+  "keywords": [
+    "parallax",
+    "scroll",
+    "scrolling",
+    "image",
+    "responsive"
+  ]
 }
