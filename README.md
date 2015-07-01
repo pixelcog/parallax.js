@@ -1,7 +1,7 @@
 Parallax.js
 ===========
 
-Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) implemented as a jQuery plugin  
+Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) implemented as a jQuery plugin
 [http://pixelcog.com/parallax.js/](http://pixelcog.com/parallax.js/)
 
 ## Installation
@@ -13,6 +13,9 @@ Download and include `parallax.min.js` in your document after including jQuery.
 <script src="/path/to/parallax.min.js"></script>
 ```
 
+If you will be using the responsive feature of `parallax.js` and do not have [Modernizr.mq](http://modernizr.com/docs/#mq) already included in the document, use the `parallax.mq.js` or `parallax.mq.min.js` version.
+
+
 ## Usage
 
 ### Via data attributes
@@ -21,6 +24,25 @@ To easily add a parallax effect behind an element, add `data-parallax="scroll"` 
 
 ```html
 <div class="parallax-window" data-parallax="scroll" data-image-src="/path/to/image.jpg"></div>
+```
+
+#### Responsive images
+
+To add different resolutions of the same images (similar to the HTML5 tag [picture](http://www.html5rocks.com/en/tutorials/responsive/picture-element/)), add ```span``` child elements and specify an image with ```data-image-src="/path/to/image.jpg"``` and its corresponding media query with ```data-media-query="<media query>"```. Media queries are tested with [Modernizr.mq](http://modernizr.com/docs/#mq). The media queries work like in CSS. (This feature is not supported in IE 8 and other old browser that do not support media queries.)
+
+```html
+<div class="parallax-window" data-parallax="scroll" data-responsive="true" data-image-src="http://placehold.it/320x320&text=default">
+  <span data-image-src="http://placehold.it/767x767/" data-media-query="(min-width: 320px)"></span>
+  <span data-image-src="http://placehold.it/1024x1024/" data-media-query="(min-width: 768px)"></span>
+  <span data-image-src="http://placehold.it/1200x1200/" data-media-query="(min-width: 1024px)"></span>
+  <span data-image-src="http://placehold.it/1400x1400/" data-media-query="(min-width: 1200px)"></span>
+</div>
+```
+
+The '767x767' image will load for widths 320px - 766px because the media query `(min-width: 320px)` matches only for that range until the device-width of 767px and `(min-width: 767px)` becomes true and matches. The '1024x1024' image will be visible until a device-width of 1024px, when `(min-width: 1024px)` matches best and the '1200x1200' image will be used. More explicit media queries can be used too like `(min-width: 320px) and (max-width: 767px)`. In order to set a fallback/default image if no media query matches, set a `data-image-src="/path/to/image.jpg"` on the parallax element `div`. If a fallback/default image is not specified, a 1x1 transparent gif will be used. Or, if the following were to be added as the first span element, before the 320px one, it would show up from 0px - 319px:
+
+```html
+<span data-image-src="http://placehold.it/320x320/" data-media-query="(max-width: 320px)"></span>
 ```
 
 ### Via JavaScript
@@ -39,15 +61,15 @@ Due to the nature of this implementation, you must ensure that these parallax ob
 
 ```css
 .parallax-window {
-	min-height: 400px;
-	background: transparent;
+  min-height: 400px;
+  background: transparent;
 }
 ```
 
 Also, keep in mind that once initialized, the parallax plugin presumes a fixed page layout unless it encounters a `scroll` or `resize` event.  If you have a dynamic page in which another javascript method may alter the DOM, you must manually refresh the parallax effect with the following commands:
 
 ```javascript
-jQuery(window).trigger('resize').trigger('scroll');
+jQuery(window).trigger('resize.px.parallax').trigger('scroll.px.parallax');
 ```
 
 ## Options
@@ -118,6 +140,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
 		</tr>
 		<tr>
+			<td>responsive</td>
+			<td>boolean</td>
+			<td>false</td>
+			<td>If true, this option will look for nested <code>&lt;span&gt;&lt;/span&gt;</code> elements with responsive information. Each nested span should specify an image with <code>data-image-src="/path/to/image.jpg"</code> and its corresponding media query with <code>data-media-query="(max-width: 768px)"</code> – the last matching media query wins. Media queries are tested with <a href="http://modernizr.com/docs/#mq" target="_blank">Modernizr.mq</a>. If set to true and no span children elements are found, and an image is specified on the parallax element <code>&lt;div&gt;&lt;/div&gt;</code> with <code>data-image-src="/path/to/image.jpg"</code> will be used and it will not be responsive. The parallax mirror aspect ratio will be updated as the images are updated.</td>
+		</tr>
+		<tr>
 			<td>iosFix</td>
 			<td>boolean</td>
 			<td>true</td>
@@ -140,11 +168,13 @@ Note that when specifying these options as html data-attributes, you should conv
 
 ## Contributing
 
-If you have a pull request you would like to submit, please ensure that you update the minified version of the library along with your code changes.  This project uses [uglifyjs](https://www.npmjs.com/package/uglify-js) to perform code compression.
+To get started developing parallax.js [Grunt](http://gruntjs.com/getting-started) and its dependencies need to be installed.
 
-Please use the following command:
+Once Grunt is installed, within the project's root directory, install project dependencies with `npm install`.
 
-	uglifyjs parallax.js --comments -m -c -o parallax.min.js
+From there, run `grunt watch` and develop the `lib/parallax.js`. This will generate `lib/parallax.mq.js`.
+
+If you have a pull request you would like to submit, please ensure that you update the minified versions of the library along with your code changes. Run `grunt` to perform code concatenation and compression, essentially updating the minified versions of the parallax.js.
 
 
 LICENSE

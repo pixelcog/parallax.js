@@ -1,0 +1,21 @@
+{
+  "browser": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "boss": true,
+  "eqnull": true,
+  "predef": ["exports"],
+  "globals": {
+    "Modernizr": true,
+    "jQuery": true
+  },
+  "-W030": true,
+  "-W117": false,
+  "-W087": false
+}
