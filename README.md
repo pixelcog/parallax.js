@@ -28,14 +28,21 @@ To easily add a parallax effect behind an element, add `data-parallax="scroll"` 
 
 #### Responsive images
 
-To add different resolutions of the same images (similar to the HTML5 tag ```[picture](http://www.html5rocks.com/en/tutorials/responsive/picture-element/)```), add ```span``` child elements and specify an image with ```data-image-src="/path/to/image.jpg"``` and its corresponding media query with ```data-media-query="<media query>"```. Media queries are tested with [Modernizr.mq](http://modernizr.com/docs/#mq). (This feature is not supported in IE 8 and other old browser that do not support media queries.)
+To add different resolutions of the same images (similar to the HTML5 tag [picture](http://www.html5rocks.com/en/tutorials/responsive/picture-element/)), add ```span``` child elements and specify an image with ```data-image-src="/path/to/image.jpg"``` and its corresponding media query with ```data-media-query="<media query>"```. Media queries are tested with [Modernizr.mq](http://modernizr.com/docs/#mq). The media queries work like in CSS. (This feature is not supported in IE 8 and other old browser that do not support media queries.)
 
 ```html
-<div class="parallax-window" data-parallax="scroll" data-responsive="true">
-  <span data-image-src="/path/to/image-767x767.jpg" data-media-query="(min-width: 0px)"></span>
-  <span data-image-src="/path/to/image-1024x1024.jpg" data-media-query="(min-width: 767px)"></span>
-  <span data-image-src="/path/to/image-1200x1200.jpg" data-media-query="(min-width: 1024px)"></span>
+<div class="parallax-window" data-parallax="scroll" data-responsive="true" data-image-src="http://placehold.it/320x320&text=default">
+  <span data-image-src="http://placehold.it/767x767/" data-media-query="(min-width: 320px)"></span>
+  <span data-image-src="http://placehold.it/1024x1024/" data-media-query="(min-width: 768px)"></span>
+  <span data-image-src="http://placehold.it/1200x1200/" data-media-query="(min-width: 1024px)"></span>
+  <span data-image-src="http://placehold.it/1400x1400/" data-media-query="(min-width: 1200px)"></span>
 </div>
+```
+
+The '767x767' image will load for widths 320px - 766px because the media query `(min-width: 320px)` matches only for that range until the device-width of 767px and `(min-width: 767px)` becomes true and matches. The '1024x1024' image will be visible until a device-width of 1024px, when `(min-width: 1024px)` matches best and the '1200x1200' image will be used. More explicit media queries can be used too like `(min-width: 320px) and (max-width: 767px)`. In order to set a fallback or default image if media query does not match anything, set the `data-image-src="/path/to/image.jpg"` on the parallax element `div`. If a fallback/default image is not specified, a 1x1 transparent gif will be used. Or, if the following were to be added as the first span element, before the 320px one, it would show up from 0px - 319px:
+
+```html
+<span data-image-src="http://placehold.it/320x320/" data-media-query="(max-width: 320px)"></span>
 ```
 
 ### Via JavaScript
@@ -136,7 +143,7 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>responsive</td>
 			<td>boolean</td>
 			<td>false</td>
-			<td>If true, this option will look for nested <code>&lt;span&gt;&lt;/span&gt;</code> elements with responsive information. Each nested span should specify an image with <code>data-image-src="/path/to/image.jpg"</code> and its corresponding media query with <code>data-media-query="(max-width: 768px)"</code> – the last matching media query wins. Media queries are tested with <a href="http://modernizr.com/docs/#mq" target="_blank">Modernizr.mq</a>. If set to true and no span children elements are found, the specified image source on the parallax element will be used and it will not be responsive. The parallax mirror aspect ratio will be updated as the images are updated.</td>
+			<td>If true, this option will look for nested <code>&lt;span&gt;&lt;/span&gt;</code> elements with responsive information. Each nested span should specify an image with <code>data-image-src="/path/to/image.jpg"</code> and its corresponding media query with <code>data-media-query="(max-width: 768px)"</code> – the last matching media query wins. Media queries are tested with <a href="http://modernizr.com/docs/#mq" target="_blank">Modernizr.mq</a>. If set to true and no span children elements are found, and an image is specified on the parallax element <code>&lt;div&gt;&lt;/div&gt;</code> with <code>data-image-src="/path/to/image.jpg"</code> will be used and it will not be responsive. The parallax mirror aspect ratio will be updated as the images are updated.</td>
 		</tr>
 		<tr>
 			<td>iosFix</td>

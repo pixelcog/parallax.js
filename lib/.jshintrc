@@ -15,5 +15,7 @@
     "Modernizr": true,
     "jQuery": true
   },
-  "-W030": true
+  "-W030": true,
+  "-W117": false,
+  "-W087": false
 }
