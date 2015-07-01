@@ -39,7 +39,7 @@ To add different resolutions of the same images (similar to the HTML5 tag [pictu
 </div>
 ```
 
-The '767x767' image will load for widths 320px - 766px because the media query `(min-width: 320px)` matches only for that range until the device-width of 767px and `(min-width: 767px)` becomes true and matches. The '1024x1024' image will be visible until a device-width of 1024px, when `(min-width: 1024px)` matches best and the '1200x1200' image will be used. More explicit media queries can be used too like `(min-width: 320px) and (max-width: 767px)`. In order to set a fallback or default image if media query does not match anything, set the `data-image-src="/path/to/image.jpg"` on the parallax element `div`. If a fallback/default image is not specified, a 1x1 transparent gif will be used. Or, if the following were to be added as the first span element, before the 320px one, it would show up from 0px - 319px:
+The '767x767' image will load for widths 320px - 766px because the media query `(min-width: 320px)` matches only for that range until the device-width of 767px and `(min-width: 767px)` becomes true and matches. The '1024x1024' image will be visible until a device-width of 1024px, when `(min-width: 1024px)` matches best and the '1200x1200' image will be used. More explicit media queries can be used too like `(min-width: 320px) and (max-width: 767px)`. In order to set a fallback/default image if no media query matches, set a `data-image-src="/path/to/image.jpg"` on the parallax element `div`. If a fallback/default image is not specified, a 1x1 transparent gif will be used. Or, if the following were to be added as the first span element, before the 320px one, it would show up from 0px - 319px:
 
 ```html
 <span data-image-src="http://placehold.it/320x320/" data-media-query="(max-width: 320px)"></span>
@@ -61,8 +61,8 @@ Due to the nature of this implementation, you must ensure that these parallax ob
 
 ```css
 .parallax-window {
-	min-height: 400px;
-	background: transparent;
+  min-height: 400px;
+  background: transparent;
 }
 ```
 
