@@ -213,7 +213,7 @@
       var overScroll   = this.overScrollFix ? Parallax.overScroll : 0;
       var scrollBottom = scrollTop + Parallax.winHeight;
 
-      if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop < scrollBottom) {
+      if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop <= scrollBottom) {
         this.visibility = 'visible';
       } else {
         this.visibility = 'hidden';
