@@ -15,7 +15,7 @@
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
       window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
       window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                 || window[vendors[x]+'CancelRequestAnimationFrame'];
+        || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
 
     if (!window.requestAnimationFrame)
@@ -115,13 +115,15 @@
 
     this.$mirror = $('<div />').prependTo('body');
 
-
     var slider = this.$element.find('>.parallax-slider');
+    var sliderExisted = false;
 
     if (slider.length == 0)
       this.$slider = $('<img />').prependTo(this.$mirror);
-    else 
+    else {
       this.$slider = slider.prependTo(this.$mirror)
+      sliderExisted = true;
+    }
 
     this.$mirror.addClass('parallax-mirror').css({
       visibility: 'hidden',
@@ -145,7 +147,8 @@
       Parallax.requestRender();
     });
 
-    this.$slider[0].src = this.imageSrc;
+    if (!sliderExisted)
+      this.$slider[0].src = this.imageSrc;
 
     if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
       this.$slider.trigger('load');
@@ -287,14 +290,14 @@
       };
 
       $win.on('resize.px.parallax load.px.parallax', function() {
-        loadDimensions();
-        Parallax.isFresh = false;
-        Parallax.requestRender();
-      })
-      .on('scroll.px.parallax load.px.parallax', function() {
-        loadScrollPosition();
-        Parallax.requestRender();
-      });
+          loadDimensions();
+          Parallax.isFresh = false;
+          Parallax.requestRender();
+        })
+        .on('scroll.px.parallax load.px.parallax', function() {
+          loadScrollPosition();
+          Parallax.requestRender();
+        });
 
       loadDimensions();
       loadScrollPosition();
