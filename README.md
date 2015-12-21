@@ -50,6 +50,39 @@ Also, keep in mind that once initialized, the parallax plugin presumes a fixed p
 jQuery(window).trigger('resize').trigger('scroll');
 ```
 
+### Using inner HTML for complex content
+
+You can use the following syntax to enable complex content for the parallax:
+
+```html
+<div class="parallax-window">
+  <div class="parallax-slider">
+    <span style="position:absolute; top: 400px; left: 400px;">Some Text</span>
+	<p>Some other Content</p>
+  </div>
+</div>
+```
+Please note, that the div with class "parallax-slider" is essential here.
+
+You then need to initialize it through JS and provide the naturalWidth and naturalHeight options in order to be rendered correctly.
+
+```
+$('.parallax-window').parallax({
+    naturalWidth: 600,
+    naturalHeight: 400
+  });
+```
+
+This also makes it possible to use responsive images in the slider:
+
+```html
+<div class="parallax-window">
+  <div class="parallax-slider">
+    <img src="/path/to/image.jpg" srcset="/path/to/image-400px.jpg 400w, /path/to/image-800px.jpg 800w, /path/to/image-1200px.jpg 1200w" sizes="100vw">
+  </div>
+</div>
+```
+
 ## Options
 
 Options can be passed in via data attributes of JavaScript.  For data attributes, append the option name to `data-`, as in `data-image-src=""`.
