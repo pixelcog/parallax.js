@@ -333,6 +333,22 @@
           self.isBusy = false;
         });
       }
+    },
+    destroy: function(el){
+      var i,
+          parallaxElement = $(el).data('px.parallax');
+      parallaxElement.$mirror.remove();
+      for(i=0; i < this.sliders.length; i+=1){
+        if(this.sliders[i] == parallaxElement){
+          this.sliders.splice(i, 1);
+        }
+      }
+      $(el).data('px.parallax', false);
+      if(this.sliders.length === 0){
+        $(window).off('scroll.px.parallax resize.px.parallax load.px.parallax');
+        this.isReady = false;
+        Parallax.isSetup = false;
+      }
     }
   });
 
@@ -356,7 +372,11 @@
         $.extend($this.data('px.parallax'), options);
       }
       if (typeof option == 'string') {
-        Parallax[option]();
+        if(option == 'destroy'){
+            Parallax['destroy'](this);
+        }else{
+          Parallax[option]();
+        }
       }
     })
   };
