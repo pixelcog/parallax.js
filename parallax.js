@@ -15,7 +15,7 @@
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
       window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
       window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                 || window[vendors[x]+'CancelRequestAnimationFrame'];
+        || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
 
     if (!window.requestAnimationFrame)
@@ -92,7 +92,7 @@
       this.positionY + (isNaN(this.positionY)? '' : 'px');
 
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
-      if (this.iosFix && !this.$element.is('img')) {
+      if (this.imageSrc && this.iosFix && !this.$element.is('img')) {
         this.$element.css({
           backgroundImage: 'url(' + this.imageSrc + ')',
           backgroundSize: 'cover',
@@ -103,7 +103,7 @@
     }
 
     if (navigator.userAgent.match(/(Android)/)) {
-      if (this.androidFix && !this.$element.is('img')) {
+      if (this.imageSrc && this.androidFix && !this.$element.is('img')) {
         this.$element.css({
           backgroundImage: 'url(' + this.imageSrc + ')',
           backgroundSize: 'cover',
@@ -114,7 +114,16 @@
     }
 
     this.$mirror = $('<div />').prependTo('body');
-    this.$slider = $('<img />').prependTo(this.$mirror);
+
+    var slider = this.$element.find('>.parallax-slider');
+    var sliderExisted = false;
+
+    if (slider.length == 0)
+      this.$slider = $('<img />').prependTo(this.$mirror);
+    else {
+      this.$slider = slider.prependTo(this.$mirror)
+      sliderExisted = true;
+    }
 
     this.$mirror.addClass('parallax-mirror').css({
       visibility: 'hidden',
@@ -138,9 +147,10 @@
       Parallax.requestRender();
     });
 
-    this.$slider[0].src = this.imageSrc;
+    if (!sliderExisted)
+      this.$slider[0].src = this.imageSrc;
 
-    if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete) {
+    if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
       this.$slider.trigger('load');
     }
 
@@ -263,22 +273,34 @@
 
       var $doc = $(document), $win = $(window);
 
+      var loadDimensions = function() {
+        Parallax.winHeight = $win.height();
+        Parallax.winWidth  = $win.width();
+        Parallax.docHeight = $doc.height();
+        Parallax.docWidth  = $doc.width();
+      };
+
+      var loadScrollPosition = function() {
+        var winScrollTop  = $win.scrollTop();
+        var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
+        var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
+        Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  winScrollTop));
+        Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+        Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min(winScrollTop, 0));
+      };
+
       $win.on('resize.px.parallax load.px.parallax', function() {
-          Parallax.winHeight = $win.height();
-          Parallax.winWidth  = $win.width();
-          Parallax.docHeight = $doc.height();
-          Parallax.docWidth  = $doc.width();
+          loadDimensions();
           Parallax.isFresh = false;
           Parallax.requestRender();
         })
         .on('scroll.px.parallax load.px.parallax', function() {
-          var scrollTopMax  = Parallax.docHeight - Parallax.winHeight;
-          var scrollLeftMax = Parallax.docWidth  - Parallax.winWidth;
-          Parallax.scrollTop  = Math.max(0, Math.min(scrollTopMax,  $win.scrollTop()));
-          Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
-          Parallax.overScroll = Math.max($win.scrollTop() - scrollTopMax, Math.min($win.scrollTop(), 0));
+          loadScrollPosition();
           Parallax.requestRender();
         });
+
+      loadDimensions();
+      loadScrollPosition();
 
       this.isReady = true;
     },
