@@ -6,7 +6,11 @@ Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) 
 
 ## Installation
 
-Download and include `parallax.min.js` in your document after including jQuery.
+Download package or install with Bower and include `parallax.min.js` in your document after including jQuery.
+
+```bash
+$ bower i --save parallax.js
+```
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
