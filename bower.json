@@ -5,7 +5,7 @@
   "description": "Simple parallax scrolling effect inspired by spotify.com implemented as a jQuery plugin",
   "authors": [
     "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)", 
-    "Wolfgang Stöttinger <wolfgang.stoettinger@gmail.com> (http://www.wolfography.at)"
+    "Wolfgang Stöttinger (http://www.wolfography.at)"
   ],
   "main": "parallax.min.js",
   "license": "MIT",
