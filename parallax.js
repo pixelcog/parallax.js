@@ -225,12 +225,12 @@
 
       if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop <= scrollBottom) {
         this.visibility = 'visible';
+        this.mirrorTop = this.boxOffsetTop  - scrollTop;
+        this.mirrorLeft = this.boxOffsetLeft - scrollLeft;
+        this.offsetTop = this.offsetBaseTop - this.mirrorTop * (1 - this.speed);
       } else {
         this.visibility = 'hidden';
       }
-      this.mirrorTop = this.boxOffsetTop  - scrollTop;
-      this.mirrorLeft = this.boxOffsetLeft - scrollLeft;
-      this.offsetTop = this.offsetBaseTop - this.mirrorTop * (1 - this.speed);
 
       this.$mirror.css({
         transform: 'translate3d(0px, 0px, 0px)',
