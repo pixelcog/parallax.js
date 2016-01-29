@@ -152,7 +152,7 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>bleed</td>
 			<td>number</td>
 			<td>0</td>
-			<td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element.  This can hide slow or stuttering scroll events in certain browsers.</td>
+			<td>You can optionally set the parallax mirror element to extend a few pixels above and below the mirrored element. This can hide slow or stuttering scroll events in certain browsers.</td>
 		</tr>
 		<tr>
 			<td>iosFix</td>
@@ -167,6 +167,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an Android user agent. Disable this if you wish to enable the parallax scrolling effect on Android devices.</td>
 		</tr>
 		<tr>
+			<td>msieFix</td>
+			<td>boolean</td>
+			<td>true</td>
+			<td>The parallax effect tends to be jerky in Internet Explorer. If true, this option will set the parallax image as a static, centered background image whenever it detects an Internet Explorer user agent. Disable this if you wish to enable the parallax scrolling effect for the Internet Explorer.</td>
+		</tr>
+		<tr>
 			<td>overScrollFix</td>
 			<td>boolean</td>
 			<td>false</td>
@@ -177,7 +183,7 @@ Note that when specifying these options as html data-attributes, you should conv
 
 ## Contributing
 
-If you have a pull request you would like to submit, please ensure that you update the minified version of the library along with your code changes.  This project uses [uglifyjs](https://www.npmjs.com/package/uglify-js) to perform code compression.
+If you have a pull request you would like to submit, please ensure that you update the minified version of the library along with your code changes. This project uses [uglifyjs](https://www.npmjs.com/package/uglify-js) to perform code compression.
 
 Please use the following command:
 

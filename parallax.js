@@ -113,6 +113,17 @@
       return this;
     }
 
+    if (navigator.userAgent.match(/(Trident|MSIE)/)) {
+      if (this.imageSrc && this.msieFix && !this.$element.is('img')) {
+        this.$element.css({
+          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundSize: 'cover',
+          backgroundPosition: this.position
+        });
+      }
+      return this;
+    }
+
     this.$mirror = $('<div />').prependTo('body');
 
     var slider = this.$element.find('>.parallax-slider');
@@ -165,6 +176,7 @@
     zIndex:   -100,
     iosFix:   true,
     androidFix: true,
+    msieFix: true,
     position: 'center',
     overScrollFix: false,
 
