@@ -133,9 +133,8 @@
       left: 0,
       overflow: 'hidden'
     });
-
-    if (this.cssId != 'slide')
-      this.$mirror.addClass(this.cssId);
+    
+    this.$mirror.attr('id', this.id);
 
     this.$slider.addClass('parallax-slider').one('load', function() {
       if (!self.naturalHeight || !self.naturalWidth) {
@@ -170,7 +169,7 @@
     androidFix: true,
     position: 'center',
     overScrollFix: false,
-    cssId: 'slide',
+    id: 'slide',
 
     refresh: function() {
       this.boxWidth        = this.$element.outerWidth();
