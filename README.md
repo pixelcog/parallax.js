@@ -172,6 +172,18 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>false</td>
 			<td>(Experimental) If true, will freeze the parallax effect when "over scrolling" in browsers like Safari to prevent unexpected gaps caused by negative scroll positions.</td>
 		</tr>
+		<tr>
+			<td>opacity</td>
+			<td>number</td>
+			<td>1</td>
+			<td>You can customize the image transparency.</td>
+		</tr>
+		<tr>
+			<td>background</td>
+			<td>string</td>
+			<td>null</td>
+			<td>You can customize the background behind the image (works with opacity < 1).</td>
+		</tr>
 	</tbody>
 </table>
 
