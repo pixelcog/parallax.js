@@ -134,6 +134,11 @@
       overflow: 'hidden'
     });
 
+    if (typeof self.opacity !== undefined)
+      this.$slider.css({ opacity: self.opacity });
+    if (typeof self.background !== undefined)
+      this.$mirror.css({ backgroundColor: self.background });
+
     this.$slider.addClass('parallax-slider').one('load', function() {
       if (!self.naturalHeight || !self.naturalWidth) {
         self.naturalHeight = this.naturalHeight || this.height || 1;
