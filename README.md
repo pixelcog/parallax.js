@@ -17,6 +17,12 @@ $ bower i --save parallax.js
 <script src="/path/to/parallax.min.js"></script>
 ```
 
+Use these CDN links, provided by jsDelivr.com
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/parallax.js/1.4.2/parallax.min.js"></script>
+```
+
 ## Usage
 
 ### Via data attributes
