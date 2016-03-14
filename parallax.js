@@ -1,6 +1,6 @@
 /*!
- * parallax.js v1.3.1 (http://pixelcog.github.io/parallax.js/)
- * @copyright 2015 PixelCog, Inc.
+ * parallax.js v1.4.2 (http://pixelcog.github.io/parallax.js/)
+ * @copyright 2016 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
 
