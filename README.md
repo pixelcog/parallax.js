@@ -37,7 +37,7 @@ $('.parallax-window').parallax({imageSrc: '/path/to/image.jpg'});
 
 ### Notes
 
-What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body. This mirror element will sit behind the other elements and match the position and dimensions of its target object.
+What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body (or another configurable container). This mirror element will sit behind the other elements and match the position and dimensions of its target object.
 
 Due to the nature of this implementation, you must ensure that these parallax objects and any layers below them are transparent so that you can see the parallax effect underneath.  Also, if there is no other content in this element, you will need to ensure that it has some fixed dimensions otherwise you won't see anything.
 
@@ -171,6 +171,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>boolean</td>
 			<td>false</td>
 			<td>(Experimental) If true, will freeze the parallax effect when "over scrolling" in browsers like Safari to prevent unexpected gaps caused by negative scroll positions.</td>
+		</tr>
+		<tr>
+			<td>mirrorContainer</td>
+			<td>jQuery Selector</td>
+			<td>body</td>
+			<td>The parallax mirror will be prepended into this container.</td>
 		</tr>
 	</tbody>
 </table>

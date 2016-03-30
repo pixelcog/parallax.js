@@ -113,7 +113,7 @@
       return this;
     }
 
-    this.$mirror = $('<div />').prependTo('body');
+    this.$mirror = $('<div />').prependTo(this.mirrorContainer);
 
     var slider = this.$element.find('>.parallax-slider');
     var sliderExisted = false;
@@ -167,6 +167,7 @@
     androidFix: true,
     position: 'center',
     overScrollFix: false,
+    mirrorContainer: 'body',
 
     refresh: function() {
       this.boxWidth        = this.$element.outerWidth();
