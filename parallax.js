@@ -1,5 +1,5 @@
 /*!
- * parallax.js v1.4.2 (http://pixelcog.github.io/parallax.js/)
+ * parallax.js v1.4.3 (http://pixelcog.github.io/parallax.js/)
  * @copyright 2016 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
@@ -230,6 +230,17 @@
         this.offsetTop = this.offsetBaseTop - this.mirrorTop * (1 - this.speed);
       } else {
         this.visibility = 'hidden';
+      }
+      
+	  // Add a '.parallax--active' class to the slider if it is visible
+      if (this.visibility == 'visible') {
+		this.$element.addClass('parallax--active');
+        this.$mirror.addClass('parallax--active');
+        this.$slider.addClass('parallax--active');
+      } else {
+		this.$element.removeClass('parallax--active');
+        this.$mirror.removeClass('parallax--active');
+        this.$slider.removeClass('parallax--active');
       }
 
       this.$mirror.css({
