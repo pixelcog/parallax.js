@@ -167,6 +167,7 @@
     androidFix: true,
     position: 'center',
     overScrollFix: false,
+    activeClass: 'parallax--active',
 
     refresh: function() {
       this.boxWidth        = this.$element.outerWidth();
@@ -222,6 +223,7 @@
       var scrollLeft   = Parallax.scrollLeft;
       var overScroll   = this.overScrollFix ? Parallax.overScroll : 0;
       var scrollBottom = scrollTop + Parallax.winHeight;
+      var activeClass  = this.activeClass;
 
       if (this.boxOffsetBottom > scrollTop && this.boxOffsetTop <= scrollBottom) {
         this.visibility = 'visible';
@@ -232,15 +234,17 @@
         this.visibility = 'hidden';
       }
       
-	  // Add a '.parallax--active' class to the slider if it is visible
-      if (this.visibility == 'visible') {
-		this.$element.addClass('parallax--active');
-        this.$mirror.addClass('parallax--active');
-        this.$slider.addClass('parallax--active');
-      } else {
-		this.$element.removeClass('parallax--active');
-        this.$mirror.removeClass('parallax--active');
-        this.$slider.removeClass('parallax--active');
+      // Add a class to the slider if it is visible
+      if (this.activeClass != 'null') {
+        if (this.visibility == 'visible') {
+          this.$element.addClass(activeClass);
+          this.$mirror.addClass(activeClass);
+          this.$slider.addClass(activeClass);
+        } else {
+          this.$element.removeClass(activeClass);
+          this.$mirror.removeClass(activeClass);
+          this.$slider.removeClass(activeClass);
+        }
       }
 
       this.$mirror.css({
