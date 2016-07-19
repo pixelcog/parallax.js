@@ -233,19 +233,19 @@
       }
 
       this.$mirror.css({
-        transform: 'translate3d(0px, 0px, 0px)',
+        transform: 'translate3d(' + this.mirrorLeft + 'px, ' + (this.mirrorTop - overScroll) + 'px, 0px)',
         visibility: this.visibility,
-        top: this.mirrorTop - overScroll,
-        left: this.mirrorLeft,
+        top: 0,
+        left: 0,
         height: this.boxHeight,
         width: this.boxWidth
       });
 
       this.$slider.css({
-        transform: 'translate3d(0px, 0px, 0px)',
+        transform: 'translate3d(' + this.offsetLeft + 'px, ' + this.offsetTop + 'px, 0px)',
         position: 'absolute',
-        top: this.offsetTop,
-        left: this.offsetLeft,
+        top: 0,
+        left: 0,
         height: this.imageHeight,
         width: this.imageWidth,
         maxWidth: 'none'
