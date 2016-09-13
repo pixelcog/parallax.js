@@ -12,6 +12,12 @@ Download package or install with Bower and include `parallax.min.js` in your doc
 $ bower i --save parallax.js
 ```
 
+Or install with NPM
+
+```bash
+$ npm i --save jquery-parallax.js
+```
+
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="/path/to/parallax.min.js"></script>
