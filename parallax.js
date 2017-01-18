@@ -233,19 +233,15 @@
       }
 
       this.$mirror.css({
-        transform: 'translate3d(0px, 0px, 0px)',
+        transform: 'translate3d('+this.mirrorLeft+'px, '+(this.mirrorTop - overScroll)+'px, 0px)',
         visibility: this.visibility,
-        top: this.mirrorTop - overScroll,
-        left: this.mirrorLeft,
         height: this.boxHeight,
         width: this.boxWidth
       });
 
       this.$slider.css({
-        transform: 'translate3d(0px, 0px, 0px)',
+        transform: 'translate3d('+this.offsetLeft+'px, '+this.offsetTop+'px, 0px)',
         position: 'absolute',
-        top: this.offsetTop,
-        left: this.offsetLeft,
         height: this.imageHeight,
         width: this.imageWidth,
         maxWidth: 'none'
@@ -270,6 +266,8 @@
 
     setup: function() {
       if (this.isReady) return;
+
+      this.lastRequestAnimationFrame = null;
 
       var $doc = $(document), $win = $(window);
 
@@ -320,19 +318,17 @@
 
     render: function() {
       this.isFresh || this.refresh();
-      $.each(this.sliders, function(){ this.render() });
+      $.each(this.sliders, function(){ this.render(); });
     },
 
     requestRender: function() {
       var self = this;
+      window.cancelAnimationFrame(self.lastRequestAnimationFrame);
 
-      if (!this.isBusy) {
-        this.isBusy = true;
-        window.requestAnimationFrame(function() {
-          self.render();
-          self.isBusy = false;
-        });
-      }
+      self.lastRequestAnimationFrame = window.requestAnimationFrame(function() {
+        self.render();
+        self.isBusy = false;
+      });
     },
     destroy: function(el){
       var i,
