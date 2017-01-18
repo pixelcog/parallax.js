@@ -5,35 +5,6 @@
  */
 
 ;(function ( $, window, document, undefined ) {
-
-  // Polyfill for requestAnimationFrame
-  // via: https://gist.github.com/paulirish/1579671
-
-  (function() {
-    var lastTime = 0;
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-      window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-      window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame)
-      window.requestAnimationFrame = function(callback) {
-        var currTime = new Date().getTime();
-        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-        var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-          timeToCall);
-        lastTime = currTime + timeToCall;
-        return id;
-      };
-
-    if (!window.cancelAnimationFrame)
-      window.cancelAnimationFrame = function(id) {
-        clearTimeout(id);
-      };
-  }());
-
-
   // Parallax Constructor
 
   function Parallax(element, options) {
@@ -267,7 +238,7 @@
     setup: function() {
       if (this.isReady) return;
 
-      this.lastRequestAnimationFrame = null;
+      var self = this;
 
       var $doc = $(document), $win = $(window);
 
@@ -289,6 +260,7 @@
 
       $win.on('resize.px.parallax load.px.parallax', function() {
           loadDimensions();
+          self.refresh();
           Parallax.isFresh = false;
           Parallax.requestRender();
         })
@@ -323,12 +295,9 @@
 
     requestRender: function() {
       var self = this;
-      window.cancelAnimationFrame(self.lastRequestAnimationFrame);
 
-      self.lastRequestAnimationFrame = window.requestAnimationFrame(function() {
-        self.render();
-        self.isBusy = false;
-      });
+      self.render();
+      self.isBusy = false;
     },
     destroy: function(el){
       var i,
