@@ -14,8 +14,7 @@
     var vendors = ['ms', 'moz', 'webkit', 'o'];
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
       window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-      window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-        || window[vendors[x]+'CancelRequestAnimationFrame'];
+      window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
 
     if (!window.requestAnimationFrame)
@@ -65,8 +64,8 @@
       positions = [positions[1], positions[0]];
     }
 
-    if (this.positionX != undefined) positions[0] = this.positionX.toLowerCase();
-    if (this.positionY != undefined) positions[1] = this.positionY.toLowerCase();
+    if (this.positionX !== undefined) positions[0] = this.positionX.toLowerCase();
+    if (this.positionY !== undefined) positions[1] = this.positionY.toLowerCase();
 
     self.positionX = positions[0];
     self.positionY = positions[1];
@@ -154,7 +153,7 @@
       this.$slider.trigger('load');
     }
 
-  };
+  }
 
 
   // Parallax Instance Methods
@@ -181,13 +180,14 @@
       var minOffset = Math.max(this.boxOffsetTop + this.boxHeight - winHeight, 0);
       var imageHeightMin = this.boxHeight + (maxOffset - minOffset) * (1 - this.speed) | 0;
       var imageOffsetMin = (this.boxOffsetTop - maxOffset) * (1 - this.speed) | 0;
+      var margin;
 
       if (imageHeightMin * this.aspectRatio >= this.boxWidth) {
         this.imageWidth    = imageHeightMin * this.aspectRatio | 0;
         this.imageHeight   = imageHeightMin;
         this.offsetBaseTop = imageOffsetMin;
 
-        var margin = this.imageWidth - this.boxWidth;
+        margin = this.imageWidth - this.boxWidth;
 
         if (this.positionX == 'left') {
           this.offsetLeft = 0;
@@ -203,7 +203,7 @@
         this.imageHeight   = this.boxWidth / this.aspectRatio | 0;
         this.offsetLeft    = 0;
 
-        var margin = this.imageHeight - imageHeightMin;
+        margin = this.imageHeight - imageHeightMin;
 
         if (this.positionY == 'top') {
           this.offsetBaseTop = imageOffsetMin;
@@ -314,7 +314,7 @@
     },
 
     refresh: function() {
-      $.each(this.sliders, function(){ this.refresh() });
+      $.each(this.sliders, function(){ this.refresh(); });
       this.isFresh = true;
     },
 
@@ -373,13 +373,13 @@
       }
       if (typeof option == 'string') {
         if(option == 'destroy'){
-            Parallax['destroy'](this);
+            Parallax.destroy(this);
         }else{
           Parallax[option]();
         }
       }
-    })
-  };
+    });
+  }
 
   var old = $.fn.parallax;
 
