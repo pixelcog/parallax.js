@@ -49,7 +49,7 @@
     this.$element = $(element);
 
     if (!this.imageSrc && this.$element.is('img')) {
-      this.imageSrc = this.$element.attr('src');
+      this.imageSrc = this.$element[0].currentSrc || this.$element.attr('src');
     }
 
     var positions = (this.position + '').toLowerCase().match(/\S+/g) || [];
