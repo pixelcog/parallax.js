@@ -147,8 +147,14 @@
       Parallax.requestRender();
     });
 
-    if (!sliderExisted)
+    if (!sliderExisted) {
       this.$slider[0].src = this.imageSrc;
+      $(this.$slider[0]).load(function() {
+        if (typeof options.loaded === 'function') {
+          options.loaded();
+        }
+      });
+    }
 
     if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
       this.$slider.trigger('load');
