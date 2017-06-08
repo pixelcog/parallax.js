@@ -94,7 +94,7 @@
     if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
       if (this.imageSrc && this.iosFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundImage: 'url(\'' + this.imageSrc + '\')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
@@ -105,7 +105,7 @@
     if (navigator.userAgent.match(/(Android)/)) {
       if (this.imageSrc && this.androidFix && !this.$element.is('img')) {
         this.$element.css({
-          backgroundImage: 'url(' + this.imageSrc + ')',
+          backgroundImage: 'url(\'' + this.imageSrc + '\')',
           backgroundSize: 'cover',
           backgroundPosition: this.position
         });
