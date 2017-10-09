@@ -145,15 +145,14 @@
       Parallax.sliders.push(self);
       Parallax.isFresh = false;
       Parallax.requestRender();
+      
+      if (typeof self.loaded === 'function') {
+        self.loaded();
+      }
     });
 
     if (!sliderExisted) {
       this.$slider[0].src = this.imageSrc;
-      $(this.$slider[0]).load(function() {
-        if (typeof options.loaded === 'function') {
-          options.loaded();
-        }
-      });
     }
 
     if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
