@@ -6,24 +6,38 @@ Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) 
 
 ## Installation
 
-Download package or install with Bower and include `parallax.min.js` in your document after including jQuery.
+### NPM
+
+```bash
+npm i --save jquery-parallax.js
+```
+
+### Yarn
+
+```bash
+yarn add jquery-parallax.js
+```
+
+### Bower
+
+Please note that although Bower is still maintained, they recommend Yarn for new projects.
 
 ```bash
 $ bower i --save parallax.js
 ```
 
-Or install with NPM
+### Setup
 
-```bash
-$ npm i --save jquery-parallax.js
-```
+Include `parallax.min.js` in your document after including jQuery.
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/path/to/parallax.min.js"></script>
 ```
 
 ## Usage
+
+Please note, that `<!DOCTYPE html>` on top of your document is required!
 
 ### Via data attributes
 
@@ -43,7 +57,7 @@ $('.parallax-window').parallax({imageSrc: '/path/to/image.jpg'});
 
 ### Notes
 
-What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body. This mirror element will sit behind the other elements and match the position and dimensions of its target object.
+What parallax.js will do is create a fixed-position element for each parallax image at the start of the document's body (or another configurable container). This mirror element will sit behind the other elements and match the position and dimensions of its target object.
 
 Due to the nature of this implementation, you must ensure that these parallax objects and any layers below them are transparent so that you can see the parallax effect underneath.  Also, if there is no other content in this element, you will need to ensure that it has some fixed dimensions otherwise you won't see anything.
 
@@ -177,6 +191,12 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>boolean</td>
 			<td>false</td>
 			<td>(Experimental) If true, will freeze the parallax effect when "over scrolling" in browsers like Safari to prevent unexpected gaps caused by negative scroll positions.</td>
+		</tr>
+		<tr>
+			<td>mirrorContainer</td>
+			<td>jQuery Selector</td>
+			<td>body</td>
+			<td>The parallax mirror will be prepended into this container.</td>
 		</tr>
 	</tbody>
 </table>
