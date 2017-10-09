@@ -151,9 +151,8 @@
       }
     });
 
-    if (!sliderExisted) {
+    if (!sliderExisted)
       this.$slider[0].src = this.imageSrc;
-    }
 
     if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
       this.$slider.trigger('load');
