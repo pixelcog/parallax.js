@@ -28,7 +28,7 @@ $ bower i --save parallax.js
 
 ### Setup
 
-Include `parallax.min.js` in your document after including jQuery.
+Include `parallax.min.js` in your document after including jQuery (compatible with jQuery >= 1.7).
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

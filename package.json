@@ -1,6 +1,6 @@
 {
   "name": "jquery-parallax.js",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "Simple parallax scrolling effect inspired by spotify.com implemented as a jQuery plugin",
   "main": "parallax.min.js",
   "scripts": {
