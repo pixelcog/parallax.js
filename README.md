@@ -26,7 +26,7 @@ To easily add a parallax effect behind an element, add `data-parallax="scroll"` 
 ```html
 <div class="parallax-window" data-parallax="scroll" data-image-src="/path/to/image.jpg"></div>
 ```
-NOTE: If you are using data attributes to implement you must now add the following jQuery code to initialize :
+NOTE: Due to a known bug, you need to add the following jQuery code to initialize correctly:
 
 ```javascript
 $('.parallax-item').parallax();
