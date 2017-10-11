@@ -1,0 +1,11 @@
+*.sublime-workspace
+*.sublime-project
+.idea
+
+.DS-Store
+.AppleDouble/
+
+node_modules
+.sass-cache
+*css.map
+npm-debug.log

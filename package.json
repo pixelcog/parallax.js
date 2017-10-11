@@ -1,31 +1,47 @@
 {
   "name": "jquery-parallax.js",
-  "version": "1.5.0",
+  "version": "2.0.0-alpha",
+  "homepage": "http://pixelcog.com/parallax.js/",
   "description": "Simple parallax scrolling effect inspired by spotify.com implemented as a jQuery plugin",
-  "main": "parallax.min.js",
+  "main": "dist/jquery.parallax.min.js",
+  "license": "MIT",
+  "keywords": [
+    "parallax",
+    "scroll",
+    "scrolling",
+    "lightweight",
+    "image"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.24.0",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^4.8.0",
+    "uglify-js": "^3.1.3",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "author": "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
+  "contributors": [
+    "Wolfgang Stöttinger (http://www.wolfography.at)"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dist": "node_modules\\.bin\\webpack --config=webpack.config.dist.babel.js",
+    "build": "node_modules\\.bin\\webpack"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pixelcog/parallax.js.git"
   },
-  "keywords": [
-    "parallax",
-    "scroll",
-    "scrolling",
-    "image"
-  ],
-  "author": [
-    "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
-    "Wolfgang Stöttinger (http://www.wolfography.at)"
-  ],
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pixelcog/parallax.js/issues"
-  },
-  "homepage": "https://github.com/pixelcog/parallax.js#readme",
-  "dependencies": {
-    "jquery": ">=1.7"
   }
 }

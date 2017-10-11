@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "linebreak-style": 0
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  }
+}
