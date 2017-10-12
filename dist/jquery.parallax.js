@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0e92d0fb35d46808f1e2"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e368a6d9675718b6e20d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -763,8 +763,6 @@ var Parallax = function () {
   /////////////////////
 
   function Parallax(element, options) {
-    var _this = this;
-
     _classCallCheck(this, Parallax);
 
     var $window = (0, _jquery2.default)(element);
@@ -821,8 +819,7 @@ var Parallax = function () {
 
       // call re-init after all images are loaded within the slider
       $slider.children('img').on('load', function () {
-        _this.refresh();
-        _this.render();
+        Parallax.update(true);
       });
 
       this.$s = $slider;
@@ -858,7 +855,8 @@ var Parallax = function () {
               bottom = 0,
               left = 0,
               right = 0;
-          $s.children().each(function () {
+          // when there are no children, the slider itself is an image
+          if ($s.children().each(function () {
             var $e = (0, _jquery2.default)(this);
             var off = $e.offset();
             var eBottom = off.top + $e.outerHeight();
@@ -868,12 +866,18 @@ var Parallax = function () {
             left = off.left < left ? off.left : left;
             bottom = eBottom > bottom ? eBottom : bottom;
             right = eRight > right ? eRight : right;
-          });
+          }).length === 0) {
+            options.aspectRatio = $s[0].naturalWidth / ($s[0].naturalHeight || 1);
+          } else {
 
-          var contentHeight = bottom - top;
-          var contentWidth = right - left;
-          // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
-          options.aspectRatio = contentWidth / (contentHeight || 1);
+            var offset = $s.offset();
+            // not sure if thats correctbut  bottom - top - offset.top yielded in wrong results
+            var contentHeight = bottom - Math.max(top, offset.top);
+            var contentWidth = right - Math.max(left, offset.left);
+
+            // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
+            options.aspectRatio = contentWidth / (contentHeight || 1);
+          }
         })(this.$s, options);
       }
       var aspect = options.aspectRatio || 1;
