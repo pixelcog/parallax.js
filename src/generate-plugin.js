@@ -20,21 +20,29 @@ import $ from 'jquery';
  * plugin('myPlugin', MyPlugin');
  */
 export default function generatePlugin(pluginName, className, shortHand = false) {
-  let dataName = `__${pluginName}`;
+  let instanceName = `__${pluginName}`;
   let old = $.fn[pluginName];
 
   $.fn[pluginName] = function (option) {
     return this.each(function () {
-      let $this = $(this);
-      let data = $this.data(dataName);
-      let options = $.extend({}, className.DEFAULTS, $this.data(), typeof option === 'object' && option);
+      const $this = $(this);
+      let instance = $this.data(instanceName);
 
-      if (!data) {
-        $this.data(dataName, (data = new className(this, options)));
+      if (!instance && option !== 'destroy') {
+        const options = $.extend({}, className.DEFAULTS, $this.data(), typeof option === 'object' && option);
+        $this.data(instanceName, (instance = new className(this, options)));
+      }
+      else if (typeof instance.configure === 'function'){
+        instance.configure(options);
       }
 
       if (typeof option === 'string') {
-        data[option]();
+        if (option === 'destroy') {
+          instance.destroy();
+          $this.data(instanceName, false);
+        } else {
+          instance[option]();
+        }
       }
     });
   };
