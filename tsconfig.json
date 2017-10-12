@@ -1,12 +1,12 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": false,
+    "allowJs": true, //SET TO FALSE THIS WHEN NO .js in ./src/**
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "alwaysStrict": true,
     "charset": "utf-8",
-    "declaration": true,
+    "declaration": false, //SET TO TRUE THIS WHEN NO .js in ./src/**
     "module": "commonjs",
     "target": "es2015",
     "sourceMap": true,
