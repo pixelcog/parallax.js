@@ -4,6 +4,10 @@ Parallax.js
 Simple parallax scrolling effect inspired by [Spotify.com](http://spotify.com/) implemented as a jQuery plugin  
 [http://pixelcog.com/parallax.js/](http://pixelcog.com/parallax.js/)
 
+
+Please also check our [v2.0.0-alpha](https://github.com/pixelcog/parallax.js/tree/v2.0.0-alpha)! We'd be happy to receive your feedback!
+
+
 ## Installation
 
 ### NPM
