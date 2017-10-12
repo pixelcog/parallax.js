@@ -1,9 +1,7 @@
-jquery.parallax.js
+jquery.parallax.js v2
 ===========
 
-Warning: This branch is still in alpha and should not be used on production servers! It should, however, be stable enough already, so please feel free to check it out and let us know if you find some issues!
-
-This Readme refers to to v2 of the jquery.prallax.js library. 
+Warning: This branch is still in alpha and should not be used on production servers! It should, however, be stable enough already, so please feel free to check it out and let us know if you find some issues! 
 
 ## Installation
 please clone or download the repository and check the dist folder for the necessary files.
@@ -111,7 +109,7 @@ The following options can be used:
 |posX|data-pos-x|'center'| number in px, 'left' or 'right' is used to calculate the x-offset. <br> Only effective when the aspect ratio of the content **smaller** than the aspect ratio of the window. <br> i.e. the content **height is higher** in relation to the window      
 |posY|data-pos-y|'center'| number in px, 'top' or 'bottom' is used to calculate the y-offset. <br> Only effective when the aspect ratio of the content **larger** than the aspect ratio of the window. <br> i.e. the content **width is wider** relation to the window
 |overScrollFix|data-over-scroll-fix|false| If true, will freeze the parallax effect when "over scrolling" in browsers like Safari to prevent unexpected gaps caused by negative scroll positions.
-|excludeAgents|data-exclude-agents| `/(iPod&#124;iPhone&#124;iPad&#124;Android)/` | regular expression, when matched with the user agent, the parallax effect is not applied. The image is set as background when data-src is used. 
+|excludeAgents|data-exclude-agents| /(iPod&#124;iPhone&#124;<br>iPad&#124;Android)/ | regular expression, when matched with the user agent, the parallax effect is not applied. The image is set as background when data-src is used. 
 |aspectRatio|data-aspect-ratio|null (automatic)| the aspect ratio which should be utilized for the content.  
 |sliderSelector|data-slider-selector|'>.parallax-slider'| the jquery selector for the slider `$currentElement.find(options.sliderSelector);`
 |mirrorSelector|data-mirror-selector|'body'| the jquery selector for the container where the mirror is prepended `$mirror.prependTo($(options.mirrorSelector));`
@@ -122,10 +120,10 @@ The following options can be used:
 
 
 ## Migration from v1.x
-v2.x has been redesigned from ground up to improve mainenance, compatibility and performance. 
+v2.x has been redesigned from ground up to improve maintainability, compatibility and performance. 
 
 The most important changes:
- - options have been simlified and reduced while increasing functionality
+ - options have been simplified and reduced while increasing functionality
  - variables and option names have been shortened to decrease the footprint
  - changed option and attribute names:
    - `imageSrc` is now `src`
@@ -158,18 +156,11 @@ $('.my-parallax-window').parallax({
 })
 ```
 
-## Changelog
+## Change log
 
 #### v2.0.0-beta 
 Most important changes include the following:
  - npm devDependencies to setup build environment
  - ES6 modules are used 
  - Webpack is used for the build process
-
-## Developer comments
-The new build process is based on webpack and the source is written in ES6, this should make maintenance easyer and make the library future proof.
-
-dev comments on the dist folder:
- - jquery.parallax.js is the new v2
- - parallax.js is the old library compiled with the new build process
- - parallax.legacy.js is the old library with the old build process
+ - tbc
