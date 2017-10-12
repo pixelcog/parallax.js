@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aef71543cc74bda77647"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "58ec8983485461522922"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -758,27 +758,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Parallax = function () {
 
-  /* Instance Methods */
-
+  ///////////////////////
+  // Instance Methods //
   /////////////////////
 
   function Parallax(element, options) {
+    var _this = this;
+
     _classCallCheck(this, Parallax);
 
-    var $element = (0, _jquery2.default)(element);
+    var $window = (0, _jquery2.default)(element);
 
-    Parallax.isSetup || Parallax.setup();
+    Parallax.isSetup || Parallax.init();
     Parallax.instances.push(this);
 
-    if (!options.src && $element.is('img')) {
-      options.src = $element.attr('src');
+    if (!options.src && $window.is('img')) {
+      options.src = $window.attr('src');
     }
 
     // match returns null if regex is null i.e. falsy, no additional checks needed
     if (navigator.userAgent.match(options.excludeAgents)) {
       // todo: enhance
-      if (options.src && !$element.is('img')) {
-        $element.css({
+      if (options.src && !$window.is('img')) {
+        $window.css({
           background: 'url("' + options.src + '")' + options.pos + '/cover'
         });
       }
@@ -811,39 +813,77 @@ var Parallax = function () {
       }).prependTo(options.mirrorContainer);
 
       // interestingly .find('>.parallax-slider') is faster than .children('.parallax-slider')
-      var $slider = $element.find('>.parallax-slider');
-      if ($slider.length === 0) $slider = (0, _jquery2.default)('<img>').attr('src', options.src);else options.oldParent = $slider.parent();
+      var $slider = $window.find('>.parallax-slider');
+      if ($slider.length === 0) $slider = (0, _jquery2.default)('<img>').attr('src', options.src);else {
+        options.formerParent = $slider.parent();
+        options.formerStyles = $slider.prop('style');
+      }
 
-      $slider.addClass('parallax-slider').prependTo($mirror).one('load', function (ev) {
-        // ditched natualWidth and naturalHeight in favor of aspectRatio option
-        if (!options.aspectRatio) {
-          options.aspectRatio = (ev.target.width || 1) / (ev.target.height || 1);
-        }
-        Parallax.update(true);
+      $slider.addClass('parallax-slider').prependTo($mirror);
+
+      // call re-init after all images are loaded within the slider
+      $slider.children('img').on('load', function () {
+        _this.refresh();
+        _this.render();
       });
 
       this.$s = $slider;
       this.$m = $mirror;
     }
 
-    this.$e = $element;
+    this.$w = $window;
     this.o = options;
 
-    if (this.$s) {
-      this.$s.trigger('load');
-    }
+    if (typeof options.afterSetup === 'function') options.afterSetup(this);
   }
+
+  /**
+   * recalculates size and position variables, everything except the scroll position.
+   */
+
 
   _createClass(Parallax, [{
     key: 'refresh',
     value: function refresh() {
-      var $element = this.$e;
+      var $window = this.$w;
       var options = this.o;
 
-      options.boxWidth = $element.outerWidth();
-      options.boxHeight = $element.outerHeight() + options.bleed * 2;
-      options.boxOffsetTop = $element.offset().top - options.bleed;
-      options.boxOffsetLeft = $element.offset().left;
+      // when not initialized yet.
+      if (!options) return;
+
+      // find out aspect ratio for the first time
+      if (!options.aspectRatio) {
+
+        (function ($s, options) {
+          // iterate through all children and find out the boundings
+          var top = 0,
+              bottom = 0,
+              left = 0,
+              right = 0;
+          $s.children().each(function () {
+            var $e = (0, _jquery2.default)(this);
+            var off = $e.offset();
+            var eBottom = off.top + $e.outerHeight();
+            var eRight = off.left + $e.outerWidth();
+
+            top = off.top < top ? off.top : top;
+            left = off.left < left ? off.left : left;
+            bottom = eBottom > bottom ? eBottom : bottom;
+            right = eRight > right ? eRight : right;
+          });
+
+          var contentHeight = bottom - top;
+          var contentWidth = right - left;
+          // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
+          options.aspectRatio = contentWidth / (contentHeight || 1);
+        })(this.$s, options);
+      }
+      var aspect = options.aspectRatio || 1;
+
+      options.boxWidth = $window.outerWidth();
+      options.boxHeight = $window.outerHeight() + options.bleed * 2;
+      options.boxOffsetTop = $window.offset().top - options.bleed;
+      options.boxOffsetLeft = $window.offset().left;
       options.boxOffsetBottom = options.boxOffsetTop + options.boxHeight;
 
       var winHeight = Parallax.winHeight;
@@ -855,8 +895,8 @@ var Parallax = function () {
       var margin = void 0;
 
       // box width is smaller than minimum image width
-      if (options.boxWidth < imageHeightMin * options.aspectRatio) {
-        options.imageWidth = imageHeightMin * options.aspectRatio | 0;
+      if (options.boxWidth < imageHeightMin * aspect) {
+        options.imageWidth = imageHeightMin * aspect | 0;
         options.imageHeight = imageHeightMin;
         options.offsetBaseTop = imageOffsetMin;
 
@@ -873,7 +913,7 @@ var Parallax = function () {
         }
       } else {
         options.imageWidth = options.boxWidth;
-        options.imageHeight = options.boxWidth / options.aspectRatio | 0;
+        options.imageHeight = options.boxWidth / aspect | 0;
         options.offsetLeft = 0;
 
         margin = options.imageHeight - imageHeightMin;
@@ -888,7 +928,14 @@ var Parallax = function () {
           options.offsetBaseTop = imageOffsetMin - margin / 2 | 0;
         }
       }
+
+      if (typeof options.afterRefresh === 'function') options.afterRefresh(this);
     }
+
+    /**
+     * renders the slider at the correct position relative to the scroll position
+     */
+
   }, {
     key: 'render',
     value: function render() {
@@ -922,7 +969,14 @@ var Parallax = function () {
         width: options.imageWidth,
         maxWidth: 'none'
       });
+
+      if (typeof options.afterRefresh === 'function') options.afterRefresh(this);
     }
+
+    /**
+     * destroys the current instance and puts the slide back where it was before initializing
+     */
+
   }, {
     key: 'destroy',
     value: function destroy() {
@@ -940,8 +994,9 @@ var Parallax = function () {
         }
 
         // append slider back to old parent if exists
-        if (this.o.oldParent) {
-          this.o.oldParent.appendChild(this.$s);
+        if (this.o.formerParent) {
+          this.$s.prop('style', this.o.formerStyles);
+          this.o.formerParent.append(this.$s);
         }
       }
 
@@ -949,15 +1004,21 @@ var Parallax = function () {
         (0, _jquery2.default)(window).off('scroll.px.parallax resize.px.parallax load.px.parallax');
         Parallax.isSetup = false;
       }
+
+      if (typeof options.afterDestroy === 'function') options.afterDestroy(this);
     }
 
-    /* Static Methods */
-
+    /////////////////////
+    // Static Methods //
     ///////////////////
 
+    /**
+     * initializes the library and all necessary variables shared among all parallax instances
+     */
+
   }], [{
-    key: 'setup',
-    value: function setup() {
+    key: 'init',
+    value: function init() {
       if (Parallax.isSetup) return;
 
       var $doc = (0, _jquery2.default)(document);
@@ -982,27 +1043,29 @@ var Parallax = function () {
       $win.on('resize.px.parallax load.px.parallax', function () {
         loadDimensions();
         Parallax.update(true);
-      }).on('scroll.px.parallax load.px.parallax', function () {
-        loadScrollPosition();
-        Parallax.update();
       });
 
-      // todo: check if this can be omitted because the events fire anyways
       loadDimensions();
-      loadScrollPosition();
 
       Parallax.isSetup = true;
 
-      /* // this looks redundant to the scroll event.
-      let lastPosition = -1;
+      var lastPosition = -1;
       (function loop() {
-        if (lastPosition !== window.pageYOffset) {   // Avoid overcalculations
+        if (lastPosition !== window.pageYOffset) {
+          // Avoid overcalculations
           lastPosition = window.pageYOffset;
+          loadScrollPosition();
           Parallax.update();
         }
         window.requestAnimationFrame(loop);
-      })(); */
+      })();
     }
+
+    /**
+     * renders all parallax instances
+     * @param refresh when true, also call refresh on all instances
+     */
+
   }, {
     key: 'update',
     value: function update() {
@@ -1021,14 +1084,20 @@ var Parallax = function () {
 }();
 
 Parallax.DEFAULTS = {
-  speed: 0.2,
+  speed: .2,
   bleed: 0,
   zIndex: -100,
   posX: 'center',
   posY: 'center',
   overScrollFix: false,
   mirrorContainer: 'body',
-  excludeAgents: /(iPod|iPhone|iPad|Android)/
+  excludeAgents: /(iPod|iPhone|iPad|Android)/,
+  aspectRatio: null,
+  // callback functions:
+  afterRefresh: null,
+  afterRender: null,
+  afterSetup: null,
+  afterDestroy: null
 };
 
 Parallax.AUTOINIT = true;

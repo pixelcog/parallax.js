@@ -8,25 +8,25 @@ import generatePlugin from './generate-plugin';
 
 class Parallax {
 
-  /* Instance Methods */
-
+  ///////////////////////
+  // Instance Methods //
   /////////////////////
 
   constructor(element, options) {
-    const $element = $(element);
+    const $window = $(element);
 
-    Parallax.isSetup || Parallax.setup();
+    Parallax.isSetup || Parallax.init();
     Parallax.instances.push(this);
 
-    if (!options.src && $element.is('img')) {
-      options.src = $element.attr('src');
+    if (!options.src && $window.is('img')) {
+      options.src = $window.attr('src');
     }
 
     // match returns null if regex is null i.e. falsy, no additional checks needed
     if (navigator.userAgent.match(options.excludeAgents)) {
       // todo: enhance
-      if (options.src && !$element.is('img')) {
-        $element.css({
+      if (options.src && !$window.is('img')) {
+        $window.css({
           background: 'url("' + options.src + '")' + options.pos + '/cover'
         });
       }
@@ -43,6 +43,7 @@ class Parallax {
           options.pos += (options[pos] = p) + 'px ';
         }
       }
+
       options.pos = '';
       _parsePos('posX', 'left', 'right');
       _parsePos('posY', 'top', 'bottom');
@@ -58,41 +59,74 @@ class Parallax {
       }).prependTo(options.mirrorContainer);
 
       // interestingly .find('>.parallax-slider') is faster than .children('.parallax-slider')
-      let $slider = $element.find('>.parallax-slider');
+      let $slider = $window.find('>.parallax-slider');
       if ($slider.length === 0)
         $slider = $('<img>').attr('src', options.src);
-      else
-        options.oldParent = $slider.parent();
+      else {
+        options.formerParent = $slider.parent();
+        options.formerStyles = $slider.prop('style');
+      }
 
+      $slider.addClass('parallax-slider').prependTo($mirror);
 
-      $slider.addClass('parallax-slider').prependTo($mirror).one('load', (ev) => {
-        // ditched natualWidth and naturalHeight in favor of aspectRatio option
-        if (!options.aspectRatio) {
-          options.aspectRatio = (ev.target.width || 1) / (ev.target.height || 1);
-        }
-        Parallax.update(true);
+      // call re-init after all images are loaded within the slider
+      $slider.children('img').on('load', () => {
+        this.refresh();
+        this.render();
       });
 
       this.$s = $slider;
       this.$m = $mirror;
     }
 
-    this.$e = $element;
+    this.$w = $window;
     this.o = options;
 
-    if (this.$s) {
-      this.$s.trigger('load');
-    }
+    if (typeof options.afterSetup === 'function')
+      options.afterSetup(this);
   }
 
+  /**
+   * recalculates size and position variables, everything except the scroll position.
+   */
   refresh() {
-    const $element = this.$e;
+    const $window = this.$w;
     const options = this.o;
 
-    options.boxWidth = $element.outerWidth();
-    options.boxHeight = $element.outerHeight() + options.bleed * 2;
-    options.boxOffsetTop = $element.offset().top - options.bleed;
-    options.boxOffsetLeft = $element.offset().left;
+    // when not initialized yet.
+    if (!options)
+      return;
+
+    // find out aspect ratio for the first time
+    if (!options.aspectRatio) {
+
+      (function ($s, options) {
+        // iterate through all children and find out the boundings
+        let top = 0, bottom = 0, left = 0, right = 0;
+        $s.children().each(function () {
+          const $e = $(this);
+          const off = $e.offset();
+          const eBottom = off.top + $e.outerHeight();
+          const eRight = off.left + $e.outerWidth();
+
+          top = off.top < top ? off.top : top;
+          left = off.left < left ? off.left : left;
+          bottom = eBottom > bottom ? eBottom : bottom;
+          right = eRight > right ? eRight : right;
+        });
+
+        const contentHeight = bottom - top;
+        const contentWidth = right - left;
+        // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
+        options.aspectRatio = contentWidth / (contentHeight || 1);
+      })(this.$s, options);
+    }
+    const aspect = options.aspectRatio || 1;
+
+    options.boxWidth = $window.outerWidth();
+    options.boxHeight = $window.outerHeight() + options.bleed * 2;
+    options.boxOffsetTop = $window.offset().top - options.bleed;
+    options.boxOffsetLeft = $window.offset().left;
     options.boxOffsetBottom = options.boxOffsetTop + options.boxHeight;
 
     const winHeight = Parallax.winHeight;
@@ -104,8 +138,8 @@ class Parallax {
     let margin;
 
     // box width is smaller than minimum image width
-    if (options.boxWidth < imageHeightMin * options.aspectRatio) {
-      options.imageWidth = imageHeightMin * options.aspectRatio | 0;
+    if (options.boxWidth < imageHeightMin * aspect) {
+      options.imageWidth = imageHeightMin * aspect | 0;
       options.imageHeight = imageHeightMin;
       options.offsetBaseTop = imageOffsetMin;
 
@@ -122,7 +156,7 @@ class Parallax {
       }
     } else {
       options.imageWidth = options.boxWidth;
-      options.imageHeight = options.boxWidth / options.aspectRatio | 0;
+      options.imageHeight = options.boxWidth / aspect | 0;
       options.offsetLeft = 0;
 
       margin = options.imageHeight - imageHeightMin;
@@ -137,8 +171,14 @@ class Parallax {
         options.offsetBaseTop = imageOffsetMin - margin / 2 | 0;
       }
     }
+
+    if (typeof options.afterRefresh === 'function')
+      options.afterRefresh(this);
   }
 
+  /**
+   * renders the slider at the correct position relative to the scroll position
+   */
   render() {
     const options = this.o;
 
@@ -170,8 +210,14 @@ class Parallax {
       width: options.imageWidth,
       maxWidth: 'none',
     });
+
+    if (typeof options.afterRefresh === 'function')
+      options.afterRefresh(this);
   }
 
+  /**
+   * destroys the current instance and puts the slide back where it was before initializing
+   */
   destroy() {
     if (this.$m) { // might be empty on mobile
       this.$m.remove();
@@ -186,8 +232,9 @@ class Parallax {
       }
 
       // append slider back to old parent if exists
-      if (this.o.oldParent) {
-        this.o.oldParent.appendChild(this.$s);
+      if (this.o.formerParent) {
+        this.$s.prop('style', this.o.formerStyles);
+        this.o.formerParent.append(this.$s);
       }
     }
 
@@ -195,13 +242,19 @@ class Parallax {
       $(window).off('scroll.px.parallax resize.px.parallax load.px.parallax');
       Parallax.isSetup = false;
     }
+
+    if (typeof options.afterDestroy === 'function')
+      options.afterDestroy(this);
   }
 
-  /* Static Methods */
-
+  /////////////////////
+  // Static Methods //
   ///////////////////
 
-  static setup() {
+  /**
+   * initializes the library and all necessary variables shared among all parallax instances
+   */
+  static init() {
     if (Parallax.isSetup) return;
 
     const $doc = $(document);
@@ -224,31 +277,29 @@ class Parallax {
     }
 
     $win.on('resize.px.parallax load.px.parallax', function () {
-        loadDimensions();
-        Parallax.update(true);
-      })
-      .on('scroll.px.parallax load.px.parallax', function () {
-        loadScrollPosition();
-        Parallax.update();
-      });
+      loadDimensions();
+      Parallax.update(true);
+    });
 
-    // todo: check if this can be omitted because the events fire anyways
     loadDimensions();
-    loadScrollPosition();
 
     Parallax.isSetup = true;
 
-    /* // this looks redundant to the scroll event.
     let lastPosition = -1;
     (function loop() {
       if (lastPosition !== window.pageYOffset) {   // Avoid overcalculations
         lastPosition = window.pageYOffset;
+        loadScrollPosition();
         Parallax.update();
       }
       window.requestAnimationFrame(loop);
-    })(); */
+    })();
   }
 
+  /**
+   * renders all parallax instances
+   * @param refresh when true, also call refresh on all instances
+   */
   static update(refresh = false) {
     if (refresh)
       $.each(Parallax.instances, function () { this.refresh(); });
@@ -257,7 +308,7 @@ class Parallax {
 }
 
 Parallax.DEFAULTS = {
-  speed: 0.2,
+  speed: .2,
   bleed: 0,
   zIndex: -100,
   posX: 'center',
@@ -265,6 +316,12 @@ Parallax.DEFAULTS = {
   overScrollFix: false,
   mirrorContainer: 'body',
   excludeAgents: /(iPod|iPhone|iPad|Android)/,
+  aspectRatio: null,
+  // callback functions:
+  afterRefresh: null,
+  afterRender: null,
+  afterSetup: null,
+  afterDestroy: null,
 };
 
 Parallax.AUTOINIT = true;
