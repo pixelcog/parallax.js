@@ -16,6 +16,7 @@
     "jquery": ">=1.7"
   },
   "devDependencies": {
+    "@types/jquery": "^3.2.13",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -35,8 +36,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dist": "node_modules\\.bin\\webpack --config=webpack.config.dist.babel.js",
-    "build": "node_modules\\.bin\\webpack"
+    "build:dist": "tsc && webpack --config=webpack.config.dist.babel.js",
+    "build": "tsc && webpack"
   },
   "repository": {
     "type": "git",
