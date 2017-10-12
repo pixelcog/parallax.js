@@ -70,8 +70,7 @@ class Parallax {
 
       // call re-init after all images are loaded within the slider
       $slider.children('img').on('load', () => {
-        this.refresh();
-        this.render();
+        Parallax.update(true);
       });
 
       this.$s = $slider;
@@ -102,22 +101,30 @@ class Parallax {
       (function ($s, options) {
         // iterate through all children and find out the boundings
         let top = 0, bottom = 0, left = 0, right = 0;
-        $s.children().each(function () {
-          const $e = $(this);
-          const off = $e.offset();
-          const eBottom = off.top + $e.outerHeight();
-          const eRight = off.left + $e.outerWidth();
+        // when there are no children, the slider itself is an image
+        if ($s.children().each(function () {
+            const $e = $(this);
+            const off = $e.offset();
+            const eBottom = off.top + $e.outerHeight();
+            const eRight = off.left + $e.outerWidth();
 
-          top = off.top < top ? off.top : top;
-          left = off.left < left ? off.left : left;
-          bottom = eBottom > bottom ? eBottom : bottom;
-          right = eRight > right ? eRight : right;
-        });
+            top = off.top < top ? off.top : top;
+            left = off.left < left ? off.left : left;
+            bottom = eBottom > bottom ? eBottom : bottom;
+            right = eRight > right ? eRight : right;
+          }).length === 0) {
+          options.aspectRatio = $s[0].naturalWidth / ($s[0].naturalHeight || 1);
+        }
+        else {
 
-        const contentHeight = bottom - top;
-        const contentWidth = right - left;
-        // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
-        options.aspectRatio = contentWidth / (contentHeight || 1);
+          const offset = $s.offset();
+          // not sure if thats correctbut  bottom - top - offset.top yielded in wrong results
+          const contentHeight = bottom - Math.max(top, offset.top);
+          const contentWidth = right - Math.max(left, offset.left);
+
+          // aspectRatio is 0 when contentWidth is 0 and therefore recalculated until there is some width
+          options.aspectRatio = contentWidth / (contentHeight || 1);
+        }
       })(this.$s, options);
     }
     const aspect = options.aspectRatio || 1;
