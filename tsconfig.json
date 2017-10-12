@@ -7,6 +7,7 @@
     "alwaysStrict": true,
     "charset": "utf-8",
     "declaration": false, //SET TO TRUE THIS WHEN NO .js in ./src/**
+    "emitBOM": true,
     "module": "commonjs",
     "target": "es2015",
     "sourceMap": true,

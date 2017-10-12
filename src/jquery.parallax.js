@@ -5,6 +5,7 @@
  */
 import $ from 'jquery';
 import generatePlugin from './generate-plugin';
+import ParallaxOptions from "./parallaxOptions"
 
 class Parallax {
 
@@ -307,22 +308,7 @@ class Parallax {
   }
 }
 
-Parallax.DEFAULTS = {
-  speed: .2,
-  bleed: 0,
-  zIndex: -100,
-  posX: 'center',
-  posY: 'center',
-  overScrollFix: false,
-  mirrorContainer: 'body',
-  excludeAgents: /(iPod|iPhone|iPad|Android)/,
-  aspectRatio: null,
-  // callback functions:
-  afterRefresh: null,
-  afterRender: null,
-  afterSetup: null,
-  afterDestroy: null,
-};
+Parallax.DEFAULTS = new ParallaxOptions();
 
 Parallax.AUTOINIT = true;
 
