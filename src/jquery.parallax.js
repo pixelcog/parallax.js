@@ -68,7 +68,7 @@ class Parallax {
       $slider.addClass('parallax-slider').prependTo($mirror);
 
       // call re-init after all images are loaded within the slider
-      $slider.children('img').on('load', () => {
+      $slider.children('img').add($slider).on('load', () => {
         Parallax.update(true);
       });
 

@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7b237e6ab30c2541f204"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9057da2a38a690ac6023"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -818,7 +818,7 @@ var Parallax = function () {
       $slider.addClass('parallax-slider').prependTo($mirror);
 
       // call re-init after all images are loaded within the slider
-      $slider.children('img').on('load', function () {
+      $slider.children('img').add($slider).on('load', function () {
         Parallax.update(true);
       });
 
