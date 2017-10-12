@@ -217,8 +217,8 @@ class Parallax {
       maxWidth: 'none',
     });
 
-    if (typeof options.afterRefresh === 'function')
-      options.afterRefresh(this);
+    if (typeof options.afterRender === 'function')
+      options.afterRender(this);
   }
 
   /**
