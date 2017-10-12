@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e368a6d9675718b6e20d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7b237e6ab30c2541f204"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -972,7 +972,7 @@ var Parallax = function () {
         maxWidth: 'none'
       });
 
-      if (typeof options.afterRefresh === 'function') options.afterRefresh(this);
+      if (typeof options.afterRender === 'function') options.afterRender(this);
     }
 
     /**
