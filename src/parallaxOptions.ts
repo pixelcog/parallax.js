@@ -1,4 +1,4 @@
-class ParallaxOptions{
+export class ParallaxOptions{
   public src: null;
   public speed= 0.2;
   public bleed= 0;
@@ -6,7 +6,6 @@ class ParallaxOptions{
   public posX= "center";
   public posY= "center";
   public overScrollFix= false;
-  public mirrorContainer= "body";
   public excludeAgents= /(iPod|iPhone|iPad|Android)/;
   public aspectRatio= null;
 

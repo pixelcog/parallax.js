@@ -5,7 +5,7 @@
  */
 import $ from 'jquery';
 import generatePlugin from './generate-plugin';
-import ParallaxOptions from "./parallaxOptions"
+import {ParallaxOptions} from "./parallaxOptions"
 
 class Parallax {
 
