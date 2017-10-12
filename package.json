@@ -16,6 +16,7 @@
     "jquery": ">=1.7"
   },
   "devDependencies": {
+    "@types/jquery": "^3.2.13",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -24,6 +25,7 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "eslint": "^4.8.0",
+    "typescript": "^2.5.3",
     "uglify-js": "^3.1.3",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
@@ -34,8 +36,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dist": "node_modules\\.bin\\webpack --config=webpack.config.dist.babel.js",
-    "build": "node_modules\\.bin\\webpack"
+    "build:dist": "tsc && webpack --config=webpack.config.dist.babel.js",
+    "build": "tsc && webpack"
   },
   "repository": {
     "type": "git",
