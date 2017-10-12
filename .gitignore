@@ -5,7 +5,8 @@
 .DS-Store
 .AppleDouble/
 
-node_modules
+node_modules/
+build/
 .sass-cache
 *css.map
 npm-debug.log
