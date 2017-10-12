@@ -1,15 +1,23 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "charset": "utf-8",
+    "declaration": true,
     "module": "commonjs",
-    "target": "es3",
+    "target": "es2015",
     "sourceMap": true,
-    "strict": false
+    "strict": false,
+    "strictNullChecks": true
   },
   "include": [
     "./src/**/*.ts"
   ],
   "exclude": [
+    "./src/**/*.d.ts",
     "./node_modules/"
   ]
 }
