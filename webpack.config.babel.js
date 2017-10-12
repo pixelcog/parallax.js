@@ -5,7 +5,6 @@ import path from 'path';
 export default {
   entry: {
     'jquery.parallax': './src/jquery.parallax.js',
-    'parallax': './src/parallax.legacy.js'
   },
   externals: {
     jquery: 'jQuery',

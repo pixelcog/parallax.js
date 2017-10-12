@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "58ec8983485461522922"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0e92d0fb35d46808f1e2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -769,12 +769,8 @@ var Parallax = function () {
 
     var $window = (0, _jquery2.default)(element);
 
-    Parallax.isSetup || Parallax.init();
-    Parallax.instances.push(this);
-
-    if (!options.src && $window.is('img')) {
-      options.src = $window.attr('src');
-    }
+    Parallax.isSet || Parallax.init();
+    Parallax.iList.push(this);
 
     // match returns null if regex is null i.e. falsy, no additional checks needed
     if (navigator.userAgent.match(options.excludeAgents)) {
@@ -785,7 +781,6 @@ var Parallax = function () {
         });
       }
     } else {
-      // migration note: scrapped the whole combined positions option in favor for a lighter footprint, i.e. only separate position options are supported
       // little parse function to keep duplicate code to a minimum.
       var _parsePos = function _parsePos(pos, p1, p2) {
         var p = parseInt(options[pos]);
@@ -810,12 +805,15 @@ var Parallax = function () {
         top: 0,
         left: 0,
         overflow: 'hidden'
-      }).prependTo(options.mirrorContainer);
+      }).prependTo((0, _jquery2.default)(options.mirrorSelector));
 
-      // interestingly .find('>.parallax-slider') is faster than .children('.parallax-slider')
-      var $slider = $window.find('>.parallax-slider');
+      /** finding the slider with the selector provided*/
+      var $slider = $window.find(options.sliderSelector);
+
       if ($slider.length === 0) $slider = (0, _jquery2.default)('<img>').attr('src', options.src);else {
+        /** former parent where the slider will be added again when destroyed */
         options.formerParent = $slider.parent();
+        /** former styles which will be set again when destroyed */
         options.formerStyles = $slider.prop('style');
       }
 
@@ -886,8 +884,8 @@ var Parallax = function () {
       options.boxOffsetLeft = $window.offset().left;
       options.boxOffsetBottom = options.boxOffsetTop + options.boxHeight;
 
-      var winHeight = Parallax.winHeight;
-      var docHeight = Parallax.docHeight;
+      var winHeight = Parallax.wH;
+      var docHeight = Parallax.dH;
       var maxOffset = Math.min(options.boxOffsetTop, docHeight - winHeight);
       var minOffset = Math.max(options.boxOffsetTop + options.boxHeight - winHeight, 0);
       var imageHeightMin = options.boxHeight + (maxOffset - minOffset) * (1 - options.speed) | 0;
@@ -941,10 +939,10 @@ var Parallax = function () {
     value: function render() {
       var options = this.o;
 
-      var scrollTop = Parallax.scrollTop;
-      var scrollLeft = Parallax.scrollLeft;
+      var scrollTop = Parallax.sT;
+      var scrollLeft = Parallax.sL;
       var overScroll = options.overScrollFix ? Parallax.overScroll : 0;
-      var scrollBottom = scrollTop + Parallax.winHeight;
+      var scrollBottom = scrollTop + Parallax.wH;
 
       if (options.boxOffsetBottom > scrollTop && options.boxOffsetTop <= scrollBottom) {
         options.visibility = 'visible';
@@ -987,9 +985,9 @@ var Parallax = function () {
       if (this.$s) {
 
         // remove slider from the sliders array
-        for (var i = 0; i < Parallax.instances.length; i++) {
-          if (Parallax.instances[i] === this) {
-            Parallax.instances.splice(i, 1);
+        for (var i = 0; i < Parallax.iList.length; i++) {
+          if (Parallax.iList[i] === this) {
+            Parallax.iList.splice(i, 1);
           }
         }
 
@@ -1000,9 +998,9 @@ var Parallax = function () {
         }
       }
 
-      if (Parallax.instances.length === 0) {
+      if (Parallax.iList.length === 0) {
         (0, _jquery2.default)(window).off('scroll.px.parallax resize.px.parallax load.px.parallax');
-        Parallax.isSetup = false;
+        Parallax.isSet = false;
       }
 
       if (typeof options.afterDestroy === 'function') options.afterDestroy(this);
@@ -1019,24 +1017,26 @@ var Parallax = function () {
   }], [{
     key: 'init',
     value: function init() {
-      if (Parallax.isSetup) return;
+      if (Parallax.isSet) return;
 
+      /** @type jQuery*/
       var $doc = (0, _jquery2.default)(document);
+      /** @type jQuery*/
       var $win = (0, _jquery2.default)(window);
 
       function loadDimensions() {
-        Parallax.winHeight = $win.height();
-        Parallax.winWidth = $win.width();
-        Parallax.docHeight = $doc.height();
-        Parallax.docWidth = $doc.width();
+        Parallax.wH = $win.height();
+        Parallax.wW = $win.width();
+        Parallax.dH = $doc.height();
+        Parallax.dW = $doc.width();
       }
 
       function loadScrollPosition() {
         var winScrollTop = $win.scrollTop();
-        var scrollTopMax = Parallax.docHeight - Parallax.winHeight;
-        var scrollLeftMax = Parallax.docWidth - Parallax.winWidth;
-        Parallax.scrollTop = Math.max(0, Math.min(scrollTopMax, winScrollTop));
-        Parallax.scrollLeft = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+        var scrollTopMax = Parallax.dH - Parallax.wH;
+        var scrollLeftMax = Parallax.dW - Parallax.wW;
+        Parallax.sT = Math.max(0, Math.min(scrollTopMax, winScrollTop));
+        Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
         Parallax.overScroll = Math.max(winScrollTop - scrollTopMax, Math.min(winScrollTop, 0));
       }
 
@@ -1047,13 +1047,14 @@ var Parallax = function () {
 
       loadDimensions();
 
-      Parallax.isSetup = true;
+      Parallax.isSet = true;
 
       var lastPosition = -1;
       (function loop() {
-        if (lastPosition !== window.pageYOffset) {
+        var yoffset = window.pageYOffset;
+        if (lastPosition !== yoffset) {
           // Avoid overcalculations
-          lastPosition = window.pageYOffset;
+          lastPosition = yoffset;
           loadScrollPosition();
           Parallax.update();
         }
@@ -1071,10 +1072,10 @@ var Parallax = function () {
     value: function update() {
       var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-      if (refresh) _jquery2.default.each(Parallax.instances, function () {
+      if (refresh) _jquery2.default.each(Parallax.iList, function () {
         this.refresh();
       });
-      _jquery2.default.each(Parallax.instances, function () {
+      _jquery2.default.each(Parallax.iList, function () {
         this.render();
       });
     }
@@ -1084,15 +1085,18 @@ var Parallax = function () {
 }();
 
 Parallax.DEFAULTS = {
+  src: null,
   speed: .2,
   bleed: 0,
   zIndex: -100,
   posX: 'center',
   posY: 'center',
   overScrollFix: false,
-  mirrorContainer: 'body',
   excludeAgents: /(iPod|iPhone|iPad|Android)/,
   aspectRatio: null,
+  // jquery selectors
+  sliderSelector: '>.parallax-slider',
+  mirrorSelector: 'body',
   // callback functions:
   afterRefresh: null,
   afterRender: null,
@@ -1102,14 +1106,50 @@ Parallax.DEFAULTS = {
 
 Parallax.AUTOINIT = true;
 
-Parallax.scrollTop = 0;
-Parallax.scrollLeft = 0;
-Parallax.winHeight = 0;
-Parallax.winWidth = 0;
-Parallax.docHeight = 1 << 30;
-Parallax.docWidth = 1 << 30;
-Parallax.instances = [];
-Parallax.isSetup = false;
+///////////////////////
+// Global variables //
+/////////////////////
+
+/**
+ * scroll top position
+ * @type {number}
+ */
+Parallax.sT = 0;
+/**
+ * scroll left position
+ * @type {number}
+ */
+Parallax.sL = 0;
+/**
+ * window height
+ * @type {number}
+ */
+Parallax.wH = 0;
+/**
+ * window width
+ * @type {number}
+ */
+Parallax.wW = 0;
+/**
+ * document height
+ * @type {number}
+ */
+Parallax.dH = 1 << 30;
+/**
+ * document width
+ * @type {number}
+ */
+Parallax.dW = 1 << 30;
+/**
+ * all instances
+ * @type {Array}
+ */
+Parallax.iList = [];
+/**
+ * flag for global setup
+ * @type {boolean}
+ */
+Parallax.isSet = false;
 
 /**
  * call auto initialization. This can be supresst by setting the static Parallax.AUTOINIT parameter to false
