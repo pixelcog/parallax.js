@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9057da2a38a690ac6023"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8b983230e7cb6f368ed9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -752,6 +752,8 @@ var _generatePlugin = __webpack_require__(2);
 
 var _generatePlugin2 = _interopRequireDefault(_generatePlugin);
 
+var _parallaxOptions = __webpack_require__(3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1088,26 +1090,7 @@ var Parallax = function () {
   return Parallax;
 }();
 
-Parallax.DEFAULTS = {
-  src: null,
-  speed: .2,
-  bleed: 0,
-  zIndex: -100,
-  posX: 'center',
-  posY: 'center',
-  overScrollFix: false,
-  excludeAgents: /(iPod|iPhone|iPad|Android)/,
-  aspectRatio: null,
-  // jquery selectors
-  sliderSelector: '>.parallax-slider',
-  mirrorSelector: 'body',
-  // callback functions:
-  afterRefresh: null,
-  afterRender: null,
-  afterSetup: null,
-  afterDestroy: null
-};
-
+Parallax.DEFAULTS = new _parallaxOptions.ParallaxOptions();
 Parallax.AUTOINIT = true;
 
 ///////////////////////
@@ -1247,6 +1230,42 @@ function generatePlugin(pluginName, className) {
     return _jquery2.default.fn[pluginName] = old;
   };
 }
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ParallaxOptions = exports.ParallaxOptions = function ParallaxOptions() {
+    _classCallCheck(this, ParallaxOptions);
+
+    this.src = null;
+    this.speed = 0.2;
+    this.bleed = 0;
+    this.zIndex = -100;
+    this.posX = "center";
+    this.posY = "center";
+    this.overScrollFix = false;
+    this.excludeAgents = /(iPod|iPhone|iPad|Android)/;
+    this.aspectRatio = null;
+    // jquery selectors
+    this.sliderSelector = ">.parallax-slider";
+    this.mirrorSelector = "body";
+    // callback functions:
+    //TODO any is type Parallax
+    this.afterRefresh = null;
+    this.afterRender = null;
+    this.afterSetup = null;
+    this.afterDestroy = null;
+};
 
 /***/ })
 /******/ ]);

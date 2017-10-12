@@ -9,6 +9,7 @@
     "declaration": false, //SET TO TRUE THIS WHEN NO .js in ./src/**
     "emitBOM": true,
     "module": "es2015",
+    "outDir": "./build/",
     "target": "es2015",
     "sourceMap": true,
     "strict": false,

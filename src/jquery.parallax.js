@@ -4,8 +4,8 @@
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
 import $ from 'jquery';
-import generatePlugin from './generate-plugin';
-import {ParallaxOptions} from "./parallaxOptions"
+import generatePlugin from 'generate-plugin';
+import {ParallaxOptions} from 'parallaxOptions';
 
 class Parallax {
 
@@ -317,8 +317,6 @@ class Parallax {
 }
 
 Parallax.DEFAULTS = new ParallaxOptions();
-
-
 Parallax.AUTOINIT = true;
 
 ///////////////////////
