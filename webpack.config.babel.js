@@ -4,7 +4,7 @@ import path from 'path';
 // noinspection JSUnresolvedFunction, JSUnusedGlobalSymbols
 export default {
   entry: {
-    'jquery.parallax': './src/jquery.parallax.js',
+    'jquery.parallax': './src/main.js',
   },
   externals: {
     // don't bundle jquery
