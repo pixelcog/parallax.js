@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "test": "echo \"please open index.html in the test folder, automation coming soon\" && exit 1",
-    "build:dist": "npm run compile && webpack --config=webpack.config.dist.babel.js",
+    "build:dist": "npm run build && webpack --config=webpack.config.dist.babel.js",
     "build": "npm run compile && webpack",
     "compile":"tsc"
   },

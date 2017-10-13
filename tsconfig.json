@@ -15,7 +15,7 @@
     "strictNullChecks": true
   },
   "include": [
-    "./src/**/*.ts"
+    "./dist/jquery.parallax.ts"
   ],
   "exclude": [
     "./src/**/*.d.ts",
