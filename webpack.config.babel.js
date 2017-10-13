@@ -7,26 +7,29 @@ export default {
     'jquery.parallax': './src/main.js',
   },
   externals: {
-    // don't bundle jquery
     jquery: 'jQuery',
   },
   module: {
-    rules: [
+    loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules|dist|test)/,
-        loader: 'babel-loader',
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: /(node_modules|dist|test)/,
-        loader: 'babel-loader!ts-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [require.resolve('babel-preset-es2015'), { 'modules': false }]
+            ]
+          }
+        },
+        exclude: /(node_modules|bower_components)/,
       },
     ]
   },
   resolve: {
-    modules: ['node_modules', 'src', 'build'],
-    extensions: ['.ts', '.tsx', '.js'],
+    modules: [
+      'node_modules',
+      'bower_components',
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

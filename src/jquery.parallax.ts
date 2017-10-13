@@ -3,8 +3,8 @@
  * @copyright 2017 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
-import generatePlugin from 'generate-plugin';
-import {ParallaxOptions} from 'parallaxOptions';
+import generatePlugin from "./generate-plugin";
+import {ParallaxOptions} from "./parallaxOptions";
 
 export class Parallax {
 
