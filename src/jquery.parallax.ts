@@ -6,7 +6,7 @@
 import generatePlugin from 'generate-plugin';
 import {ParallaxOptions} from 'parallaxOptions';
 
-class Parallax {
+export class Parallax {
 
   private $s;
   private $m;
