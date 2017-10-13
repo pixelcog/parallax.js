@@ -1,3 +1,5 @@
+import {Parallax} from "./jquery.parallax";
+
 export class ParallaxOptions{
   public src: string | null = null;
   public speed: number = 0.2;
@@ -14,10 +16,8 @@ export class ParallaxOptions{
   public mirrorSelector: string = "body";
 
   // callback functions:
-  //TODO any is type Parallax
-  public afterRefresh: ((any) => void) | null = null;
-  public afterRender: ((any) => void) | null = null;
-  public afterSetup: ((any) => void) | null = null;
-  public afterDestroy: ((any) => void) | null = null;
+  public afterRefresh: ((parallax: Parallax) => void) | null = null;
+  public afterRender: ((parallax: Parallax) => void) | null = null;
+  public afterSetup: ((parallax: Parallax) => void) | null = null;
+  public afterDestroy: ((parallax: Parallax) => void) | null = null;
 }
-
