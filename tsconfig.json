@@ -1,15 +1,14 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": true, //SET TO FALSE THIS WHEN NO .js in ./src/**
+    "allowJs": false,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "alwaysStrict": true,
     "charset": "utf-8",
-    "declaration": false, //SET TO TRUE THIS WHEN NO .js in ./src/**
+    "declaration": true,
     "emitBOM": true,
     "module": "es2015",
-    "outDir": "./build/",
     "target": "es2015",
     "sourceMap": true,
     "strict": false,
