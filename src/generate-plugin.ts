@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 /**
  * Generate a jQuery plugin
  * @param pluginName [string] Plugin name
@@ -23,7 +21,7 @@ export default function generatePlugin(pluginName, className, shortHand = false)
   let instanceName = `__${pluginName}`;
   let old = $.fn[pluginName];
 
-  $.fn[pluginName] = function (option) {
+  ($.fn as any)[pluginName] = function (option) {
     return this.each(function () {
       const $this = $(this);
       let instance = $this.data(instanceName);
@@ -33,7 +31,7 @@ export default function generatePlugin(pluginName, className, shortHand = false)
         $this.data(instanceName, (instance = new className(this, options)));
       }
       else if (typeof instance.configure === 'function'){
-        instance.configure(options);
+        instance.configure(option);
       }
 
       if (typeof option === 'string') {
@@ -49,9 +47,9 @@ export default function generatePlugin(pluginName, className, shortHand = false)
 
   // - Short hand
   if (shortHand) {
-    $[pluginName] = (options) => $({})[pluginName](options);
+    $[pluginName] = (options) => ($({})[pluginName] as any)(options);
   }
 
   // - No conflict
-  $.fn[pluginName].noConflict = () => $.fn[pluginName] = old;
+  ($.fn[pluginName] as any).noConflict = () => $.fn[pluginName] = old;
 }
