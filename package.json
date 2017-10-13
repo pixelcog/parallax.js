@@ -26,7 +26,7 @@
     "babel-runtime": "^6.26.0",
     "eslint": "^4.8.0",
     "ts-loader": "^2.3.7",
-    "typescript": "^2.5.3",
+    "typescript": "^2.6.0",
     "uglify-js": "^3.1.3",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
@@ -38,7 +38,8 @@
   "scripts": {
     "test": "echo \"please open index.html in the test folder, automation coming soon\" && exit 1",
     "build:dist": "webpack --config=webpack.config.dist.babel.js",
-    "build": "webpack"
+    "build": "webpack",
+    "compile":"tsc"
   },
   "repository": {
     "type": "git",
