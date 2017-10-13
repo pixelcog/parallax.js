@@ -1,3 +1,8 @@
+### Parallax.js ###
+/src/*.js
+/src/*.js.map
+/src/*.d.ts
+
 *.sublime-workspace
 *.sublime-project
 .idea
