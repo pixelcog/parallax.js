@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dee065e02b23f6ec3b59"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9d571be7ee7e062abc2c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -722,11 +722,117 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(3)(__webpack_require__.s = 3);
+/******/ 	return hotCreateRequire(2)(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = jQuery;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ParallaxOptions = exports.ParallaxOptions = function ParallaxOptions() {
+    _classCallCheck(this, ParallaxOptions);
+
+    this.src = null;
+    this.speed = 0.2;
+    this.bleed = 0;
+    this.zIndex = -100;
+    this.posX = "center";
+    this.posY = "center";
+    this.overScrollFix = false;
+    this.excludeAgents = /(iPod|iPhone|iPad|Android)/;
+    this.aspectRatio = null;
+    // jquery selectors
+    this.sliderSelector = ">.parallax-slider";
+    this.mirrorSelector = "body";
+    // callback functions:
+    this.afterRefresh = null;
+    this.afterRender = null;
+    this.afterSetup = null;
+    this.afterDestroy = null;
+};
+//# sourceMappingURL=parallaxOptions.js.map
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _generatePlugin = __webpack_require__(3);
+
+Object.keys(_generatePlugin).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _generatePlugin[key];
+        }
+    });
+});
+
+var _parallax = __webpack_require__(4);
+
+Object.keys(_parallax).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _parallax[key];
+        }
+    });
+});
+
+var _parallaxOptions = __webpack_require__(1);
+
+Object.keys(_parallaxOptions).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _parallaxOptions[key];
+        }
+    });
+});
+exports.main = main;
+
+var _generatePlugin2 = _interopRequireDefault(_generatePlugin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function main() {
+    $(function () {
+        if (_parallax.Parallax.AUTOINIT) {
+            $('[data-parallax]').parallax();
+        }
+    });
+    (0, _generatePlugin2.default)('parallax', _parallax.Parallax);
+}
+main();
+//# sourceMappingURL=main.js.map
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -795,91 +901,7 @@ function generatePlugin(pluginName, className) {
     };
 }
 //# sourceMappingURL=generate-plugin.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ParallaxOptions = exports.ParallaxOptions = function ParallaxOptions() {
-    _classCallCheck(this, ParallaxOptions);
-
-    this.src = null;
-    this.speed = 0.2;
-    this.bleed = 0;
-    this.zIndex = -100;
-    this.posX = "center";
-    this.posY = "center";
-    this.overScrollFix = false;
-    this.excludeAgents = /(iPod|iPhone|iPad|Android)/;
-    this.aspectRatio = null;
-    // jquery selectors
-    this.sliderSelector = ">.parallax-slider";
-    this.mirrorSelector = "body";
-    // callback functions:
-    //TODO any is type Parallax
-    this.afterRefresh = null;
-    this.afterRender = null;
-    this.afterSetup = null;
-    this.afterDestroy = null;
-};
-//# sourceMappingURL=parallaxOptions.js.map
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _generatePlugin = __webpack_require__(0);
-
-Object.keys(_generatePlugin).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _generatePlugin[key];
-    }
-  });
-});
-
-var _jquery = __webpack_require__(4);
-
-Object.defineProperty(exports, "Parallax", {
-  enumerable: true,
-  get: function get() {
-    return _jquery.Parallax;
-  }
-});
-
-var _parallaxOptions = __webpack_require__(2);
-
-Object.defineProperty(exports, "ParallaxOptions", {
-  enumerable: true,
-  get: function get() {
-    return _parallaxOptions.ParallaxOptions;
-  }
-});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 4 */
@@ -900,13 +922,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _generatePlugin = __webpack_require__(0);
-
-var _generatePlugin2 = _interopRequireDefault(_generatePlugin);
-
-var _parallaxOptions = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _parallaxOptions = __webpack_require__(1);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -979,7 +995,7 @@ var Parallax = exports.Parallax = function () {
 
 
     _createClass(Parallax, [{
-        key: "refresh",
+        key: 'refresh',
         value: function refresh() {
             var $window = this.$w;
             var options = this.o;
@@ -1065,7 +1081,7 @@ var Parallax = exports.Parallax = function () {
          */
 
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var options = this.o;
             var scrollTop = Parallax.sT;
@@ -1100,7 +1116,7 @@ var Parallax = exports.Parallax = function () {
          */
 
     }, {
-        key: "destroy",
+        key: 'destroy',
         value: function destroy() {
             if (this.$m) {
                 this.$m.remove();
@@ -1129,7 +1145,7 @@ var Parallax = exports.Parallax = function () {
          */
 
     }], [{
-        key: "init",
+        key: 'init',
         value: function init() {
             if (Parallax.isSet) return;
             /** @type jQuery*/
@@ -1173,7 +1189,7 @@ var Parallax = exports.Parallax = function () {
          */
 
     }, {
-        key: "update",
+        key: 'update',
         value: function update() {
             var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
@@ -1238,17 +1254,8 @@ Parallax.iList = [];
  * @type {boolean}
  */
 Parallax.isSet = false;
-/**
- * call auto initialization. This can be supresst by setting the static Parallax.AUTOINIT parameter to false
- */
-$(function () {
-    if (Parallax.AUTOINIT) {
-        $('[data-parallax]').parallax();
-    }
-});
-(0, _generatePlugin2.default)('parallax', Parallax);
-//# sourceMappingURL=jquery.parallax.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+//# sourceMappingURL=parallax.js.map
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);

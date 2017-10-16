@@ -3,7 +3,6 @@
  * @copyright 2017 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
-import generatePlugin from "./generate-plugin";
 import {ParallaxOptions} from "./parallaxOptions";
 
 export class Parallax {
@@ -376,15 +375,3 @@ export class Parallax {
     $.each(Parallax.iList, function () { this.render(); });
   }
 }
-
-
-/**
- * call auto initialization. This can be supresst by setting the static Parallax.AUTOINIT parameter to false
- */
-$(() => {
-  if (Parallax.AUTOINIT) {
-    ($('[data-parallax]') as any).parallax();
-  }
-});
-
-generatePlugin('parallax', Parallax);

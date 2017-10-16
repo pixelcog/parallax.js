@@ -1,4 +1,4 @@
-import {Parallax} from "./jquery.parallax";
+import {Parallax} from "./parallax";
 
 export class ParallaxOptions{
   public src: string | null = null;
