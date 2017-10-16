@@ -3,6 +3,7 @@
 /src/*.js.map
 /src/*.d.ts
 /node_modules/
+package-lock.json
 
 ### Other ###
 *.sublime-workspace
