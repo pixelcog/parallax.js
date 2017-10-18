@@ -1,3 +1,11 @@
+### Parallax.js ###
+/src/*.js
+/src/*.js.map
+/src/*.d.ts
+/node_modules/
+package-lock.json
+
+### Other ###
 *.sublime-workspace
 *.sublime-project
 .idea
@@ -5,7 +13,6 @@
 .DS-Store
 .AppleDouble/
 
-node_modules/
 build/
 .sass-cache
 *css.map

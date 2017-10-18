@@ -3,11 +3,14 @@
  * @copyright 2017 PixelCog, Inc.
  * @license MIT (https://github.com/pixelcog/parallax.js/blob/master/LICENSE)
  */
-import $ from 'jquery';
-import generatePlugin from 'generate-plugin';
-import {ParallaxOptions} from 'parallaxOptions';
+import {ParallaxOptions} from "./parallaxOptions";
 
-class Parallax {
+export class Parallax {
+
+  private $s;
+  private $m;
+  private $w;
+  private o;
 
   ///////////////////////
   // Instance Methods //
@@ -103,7 +106,7 @@ class Parallax {
         let top = 0, bottom = 0, left = 0, right = 0;
         // when there are no children, the slider itself is an image
         if ($s.children().each(function () {
-            const $e = $(this);
+            const $e = $(this) as any;
             const off = $e.offset();
             const eBottom = off.top + $e.outerHeight();
             const eRight = off.left + $e.outerWidth();
@@ -249,13 +252,70 @@ class Parallax {
       Parallax.isSet = false;
     }
 
-    if (typeof options.afterDestroy === 'function')
-      options.afterDestroy(this);
+    if (typeof this.o.afterDestroy === 'function')
+      this.o.afterDestroy(this);
   }
 
   /////////////////////
   // Static Methods //
   ///////////////////
+
+  public static DEFAULTS=new ParallaxOptions();
+  public static AUTOINIT = true;
+  public static overScroll;
+
+  ///////////////////////
+// Global variables //
+/////////////////////
+
+  /**
+   * scroll top position
+   * @type {number}
+   */
+  public static sT = 0;
+
+  /**
+   * scroll left position
+   * @type {number}
+   */
+  public static sL = 0;
+
+  /**
+   * window height
+   * @type {number}
+   */
+  public static wH = 0;
+
+  /**
+   * window width
+   * @type {number}
+   */
+  public static wW = 0;
+
+  /**
+   * document height
+   * @type {number}
+   */
+  public static dH = 1 << 30;
+
+  /**
+   * document width
+   * @type {number}
+   */
+  public static dW = 1 << 30;
+
+  /**
+   * all instances
+   * @type {Array}
+   */
+  public static iList :Array<Parallax>= [];
+
+  /**
+   * flag for global setup
+   * @type {boolean}
+   */
+  public static isSet = false;
+
 
   /**
    * initializes the library and all necessary variables shared among all parallax instances
@@ -269,19 +329,19 @@ class Parallax {
     const $win = $(window);
 
     function loadDimensions() {
-      Parallax.wH = $win.height();
-      Parallax.wW = $win.width();
-      Parallax.dH = $doc.height();
-      Parallax.dW = $doc.width();
+      Parallax.wH = $win.height() as any;
+      Parallax.wW = $win.width() as any;
+      Parallax.dH = $doc.height() as any;
+      Parallax.dW = $doc.width() as any;
     }
 
     function loadScrollPosition() {
       const winScrollTop = $win.scrollTop();
       const scrollTopMax = Parallax.dH - Parallax.wH;
       const scrollLeftMax = Parallax.dW - Parallax.wW;
-      Parallax.sT = Math.max(0, Math.min(scrollTopMax, winScrollTop));
-      Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
-      Parallax.overScroll = Math.max(winScrollTop - scrollTopMax, Math.min(winScrollTop, 0));
+      Parallax.sT = Math.max(0, Math.min(scrollTopMax, winScrollTop as any));
+      Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft() as any));
+      Parallax.overScroll = Math.max(winScrollTop as any - scrollTopMax, Math.min(winScrollTop as any, 0));
     }
 
     $win.on('resize.px.parallax load.px.parallax', function () {
@@ -315,62 +375,3 @@ class Parallax {
     $.each(Parallax.iList, function () { this.render(); });
   }
 }
-
-Parallax.DEFAULTS = new ParallaxOptions();
-Parallax.AUTOINIT = true;
-
-///////////////////////
-// Global variables //
-/////////////////////
-
-/**
- * scroll top position
- * @type {number}
- */
-Parallax.sT = 0;
-/**
- * scroll left position
- * @type {number}
- */
-Parallax.sL = 0;
-/**
- * window height
- * @type {number}
- */
-Parallax.wH = 0;
-/**
- * window width
- * @type {number}
- */
-Parallax.wW = 0;
-/**
- * document height
- * @type {number}
- */
-Parallax.dH = 1 << 30;
-/**
- * document width
- * @type {number}
- */
-Parallax.dW = 1 << 30;
-/**
- * all instances
- * @type {Array}
- */
-Parallax.iList = [];
-/**
- * flag for global setup
- * @type {boolean}
- */
-Parallax.isSet = false;
-
-/**
- * call auto initialization. This can be supresst by setting the static Parallax.AUTOINIT parameter to false
- */
-$(() => {
-  if (Parallax.AUTOINIT) {
-    $('[data-parallax]').parallax();
-  }
-});
-
-generatePlugin('parallax', Parallax);
