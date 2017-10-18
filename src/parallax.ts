@@ -260,13 +260,13 @@ export class Parallax {
   // Static Methods //
   ///////////////////
 
-  public static DEFAULTS=new ParallaxOptions();
+  public static DEFAULTS = new ParallaxOptions();
   public static AUTOINIT = true;
   public static overScroll;
 
   ///////////////////////
-// Global variables //
-/////////////////////
+  // Global variables //
+  /////////////////////
 
   /**
    * scroll top position
@@ -308,14 +308,13 @@ export class Parallax {
    * all instances
    * @type {Array}
    */
-  public static iList :Array<Parallax>= [];
+  public static iList: Array<Parallax> = [];
 
   /**
    * flag for global setup
    * @type {boolean}
    */
   public static isSet = false;
-
 
   /**
    * initializes the library and all necessary variables shared among all parallax instances
