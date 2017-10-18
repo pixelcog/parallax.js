@@ -6,13 +6,13 @@ export * from "./parallax";
 export * from "./parallaxOptions";
 
 export function main(){
+  generatePlugin('parallax', Parallax);
+
   $(() => {
     if (Parallax.AUTOINIT) {
       ($('[data-parallax]') as any).parallax();
     }
   });
-
-  generatePlugin('parallax', Parallax);
 }
 
 main();
