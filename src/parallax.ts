@@ -248,7 +248,7 @@ export class Parallax {
     }
 
     if (Parallax.iList.length === 0) {
-      $(window).off('scroll.px.parallax resize.px.parallax load.px.parallax');
+      $(window).off('resize.px.parallax load.px.parallax');
       Parallax.isSet = false;
     }
 
