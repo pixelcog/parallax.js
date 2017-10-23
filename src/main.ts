@@ -8,6 +8,7 @@ export function main(){
   generatePlugin('parallax', Parallax);
 
   $(() => {
+    // todo: remove this option and simply do it Parallax.AUTOINIT
     if (Parallax.AUTOINIT) {
       ($('[data-parallax]') as any).parallax();
     }
