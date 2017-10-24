@@ -42,7 +42,8 @@
     "build": "npm run compile && webpack",
     "compile": "tsc",
     "postinstall": "npm run build:dist",
-    "tslint":"tslint --project ./tsconfig.json"
+    "tslint":"tslint --project ./tsconfig.json",
+    "tslint:fix":"tslint --fix --project ./tsconfig.json"
   },
   "repository": {
     "type": "git",
