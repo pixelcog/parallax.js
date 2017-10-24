@@ -16,7 +16,7 @@
     "jquery": ">=1.7"
   },
   "devDependencies": {
-    "@types/jquery": "^3.2.13",
+    "@types/jquery": "^2.0.46",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -39,7 +39,8 @@
     "test": "echo \"please open index.html in the test folder, automation coming soon\" && exit 1",
     "build:dist": "npm run build && webpack --config=webpack.config.dist.babel.js",
     "build": "npm run compile && webpack",
-    "compile": "tsc"
+    "compile": "tsc",
+    "postinstall": "npm run build:dist"
   },
   "repository": {
     "type": "git",
