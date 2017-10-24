@@ -5,11 +5,16 @@ export class ParallaxOptions{
   public speed: number = 0.2;
   public bleed: number = 0;
   public zIndex: number = -100;
+  public pos: string | null=null;
   public posX: string = "center";
   public posY: string = "center";
   public overScrollFix: boolean = false;
   public excludeAgents: RegExp = /(iPod|iPhone|iPad|Android)/;
   public aspectRatio: number | null = null;
+
+  // jQuery
+  public formerParent: JQuery| null=null;
+  public formerStyles: any;
 
   // jquery selectors
   public sliderSelector: string = ">.parallax-slider";

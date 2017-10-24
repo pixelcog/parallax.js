@@ -7,16 +7,16 @@ import {ParallaxOptions} from "./parallaxOptions";
 
 export class Parallax {
 
-  private $s;
-  private $m;
-  private $w;
-  private o;
+  private $s: JQuery|any;
+  private $m: JQuery;
+  private $w: JQuery;
+  private o: any;
 
   ///////////////////////
   // Instance Methods //
   /////////////////////
 
-  constructor(element, options) {
+  constructor(element: HTMLElement, options: ParallaxOptions) {
     const $window = $(element);
 
     Parallax.isSet || Parallax.init();
@@ -90,7 +90,7 @@ export class Parallax {
   /**
    * recalculates size and position variables, everything except the scroll position.
    */
-  refresh() {
+  public refresh(): void {
     const $window = this.$w;
     const options = this.o;
 
@@ -188,7 +188,7 @@ export class Parallax {
   /**
    * renders the slider at the correct position relative to the scroll position
    */
-  render() {
+  public render(): void {
     const options = this.o;
 
     const scrollTop = Parallax.sT;
@@ -227,7 +227,7 @@ export class Parallax {
   /**
    * destroys the current instance and puts the slide back where it was before initializing
    */
-  destroy() {
+  public destroy(): void {
     if (this.$m) { // might be empty on mobile
       this.$m.remove();
     }
@@ -260,9 +260,9 @@ export class Parallax {
   // Static Methods //
   ///////////////////
 
-  public static DEFAULTS = new ParallaxOptions();
-  public static AUTOINIT = true;
-  public static overScroll;
+  public static DEFAULTS: ParallaxOptions = new ParallaxOptions();
+  public static AUTOINIT:boolean = true;
+  public static overScroll: number;
 
   ///////////////////////
   // Global variables //
@@ -272,37 +272,37 @@ export class Parallax {
    * scroll top position
    * @type {number}
    */
-  public static sT = 0;
+  public static sT:number = 0;
 
   /**
    * scroll left position
    * @type {number}
    */
-  public static sL = 0;
+  public static sL:number = 0;
 
   /**
    * window height
    * @type {number}
    */
-  public static wH = 0;
+  public static wH:number = 0;
 
   /**
    * window width
    * @type {number}
    */
-  public static wW = 0;
+  public static wW:number = 0;
 
   /**
    * document height
    * @type {number}
    */
-  public static dH = 1 << 30;
+  public static dH:number = 1 << 30;
 
   /**
    * document width
    * @type {number}
    */
-  public static dW = 1 << 30;
+  public static dW:number = 1 << 30;
 
   /**
    * all instances
@@ -314,12 +314,12 @@ export class Parallax {
    * flag for global setup
    * @type {boolean}
    */
-  public static isSet = false;
+  public static isSet:boolean = false;
 
   /**
    * initializes the library and all necessary variables shared among all parallax instances
    */
-  static init() {
+  static init(): void {
     if (Parallax.isSet) return;
 
     /** @type jQuery*/
@@ -368,9 +368,10 @@ export class Parallax {
    * renders all parallax instances
    * @param refresh when true, also call refresh on all instances
    */
-  static update(refresh = false) {
+  public static update(refresh:boolean = false): void {
     if (refresh)
       $.each(Parallax.iList, function () { this.refresh(); });
     $.each(Parallax.iList, function () { this.render(); });
   }
+
 }
