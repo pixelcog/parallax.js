@@ -17,7 +17,7 @@
  *
  * plugin('myPlugin', MyPlugin');
  */
-export default function generatePlugin(pluginName, className, shortHand = false) {
+export default function generatePlugin(pluginName: string, className:any, shortHand:boolean = false): void {
   let instanceName = `__${pluginName}`;
   let old = $.fn[pluginName];
 
