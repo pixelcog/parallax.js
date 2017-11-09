@@ -1,6 +1,34 @@
+body {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.scrollingElement {
+  overflow: scroll;
+  position: absolute;
+  top: 213px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+
 section {
   padding: 25px 0 35px;
   background: #fff;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index:100;
 }
 
 .parallax-container {
