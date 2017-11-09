@@ -56,9 +56,9 @@ class Parallax {
       /** finding the slider with the selector provided*/
       let $slider = $window.find(options.sliderSelector);
 
-      if ($slider.length === 0)
+      if ($slider.length === 0) {
         $slider = $('<img>').attr('src', options.src);
-      else {
+      } else {
         /** former parent where the slider will be added again when destroyed */
         options.formerParent = $slider.parent();
         /** former styles which will be set again when destroyed */
@@ -69,6 +69,7 @@ class Parallax {
 
       // call re-init after all images are loaded within the slider
       $slider.children('img').add($slider).on('load', () => {
+        // this also calls the refresh method of the parallax once the image is loaded
         Parallax.update(true);
       });
 
@@ -79,8 +80,9 @@ class Parallax {
     this.$w = $window;
     this.o = options;
 
-    if (typeof options.afterSetup === 'function')
+    if (typeof options.afterSetup === 'function') {
       options.afterSetup(this);
+    }
   }
 
   /**
@@ -91,8 +93,9 @@ class Parallax {
     const options = this.o;
 
     // when not initialized yet.
-    if (!options)
+    if (!options) {
       return;
+    }
 
     // find out aspect ratio for the first time
     if (!options.aspectRatio) {
@@ -177,8 +180,9 @@ class Parallax {
       }
     }
 
-    if (typeof options.afterRefresh === 'function')
+    if (typeof options.afterRefresh === 'function') {
       options.afterRefresh(this);
+    }
   }
 
   /**
@@ -216,8 +220,9 @@ class Parallax {
       maxWidth: 'none',
     });
 
-    if (typeof options.afterRender === 'function')
+    if (typeof options.afterRender === 'function') {
       options.afterRender(this);
+    }
   }
 
   /**
@@ -261,7 +266,9 @@ class Parallax {
    * initializes the library and all necessary variables shared among all parallax instances
    */
   static init() {
-    if (Parallax.isSet) return;
+    if (Parallax.isSet) {
+      return;
+    }
 
     /** @type jQuery*/
     const $doc = $(document);
@@ -310,8 +317,9 @@ class Parallax {
    * @param refresh when true, also call refresh on all instances
    */
   static update(refresh = false) {
-    if (refresh)
+    if (refresh) {
       $.each(Parallax.iList, function () { this.refresh(); });
+    }
     $.each(Parallax.iList, function () { this.render(); });
   }
 }
