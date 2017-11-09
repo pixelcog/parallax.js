@@ -15,6 +15,10 @@ class Parallax {
   constructor(element, options) {
     const $window = $(element);
 
+    if (options.scrollingSelector) {
+      Parallax.scrollingElement = $(options.scrollingSelector)[0];
+    }
+
     Parallax.isSet || Parallax.init();
     Parallax.iList.push(this);
 
@@ -91,6 +95,16 @@ class Parallax {
   refresh() {
     const $window = this.$w;
     const options = this.o;
+
+    options.dH = Parallax.dH;
+    options.dW = Parallax.dW;
+
+    const se = options.scrollingElement;
+
+    if (se && se !== document) {
+      options.dH = se.scrollHeight;
+      options.dW = se.scrollWidth;
+    }
 
     // when not initialized yet.
     if (!options) {
@@ -271,23 +285,26 @@ class Parallax {
     }
 
     /** @type jQuery*/
-    const $doc = $(document);
+    const $se = $(Parallax.scrollingElement || document);
     /** @type jQuery*/
     const $win = $(window);
+
+    /** @type jQuery*/
+    const $sw = $(Parallax.scrollingElement || window);
 
     function loadDimensions() {
       Parallax.wH = $win.height();
       Parallax.wW = $win.width();
-      Parallax.dH = $doc.height();
-      Parallax.dW = $doc.width();
+      Parallax.dH = $se[0].scrollHeight || $se.height();
+      Parallax.dW = $se[0].scrollWidth || $se.width();
     }
 
     function loadScrollPosition() {
-      const winScrollTop = $win.scrollTop();
+      const winScrollTop = $sw.scrollTop();
       const scrollTopMax = Parallax.dH - Parallax.wH;
       const scrollLeftMax = Parallax.dW - Parallax.wW;
       Parallax.sT = Math.max(0, Math.min(scrollTopMax, winScrollTop));
-      Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+      Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $sw.scrollLeft()));
       Parallax.overScroll = Math.max(winScrollTop - scrollTopMax, Math.min(winScrollTop, 0));
     }
 
@@ -302,7 +319,7 @@ class Parallax {
 
     let lastPosition = -1;
     (function loop() {
-      const yoffset = window.pageYOffset;
+      const yoffset = $sw.scrollTop();
       if (lastPosition !== yoffset) {   // Avoid overcalculations
         lastPosition = yoffset;
         loadScrollPosition();
@@ -337,6 +354,7 @@ Parallax.DEFAULTS = {
   // jquery selectors
   sliderSelector: '>.parallax-slider',
   mirrorSelector: 'body',
+  scrollingSelector: null,
   // callback functions:
   afterRefresh: null,
   afterRender: null,
