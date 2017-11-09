@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9057da2a38a690ac6023"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cebbd3e4698d8e72f46d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -767,6 +767,10 @@ var Parallax = function () {
 
     var $window = (0, _jquery2.default)(element);
 
+    if (options.scrollingSelector) {
+      Parallax.scrollingElement = (0, _jquery2.default)(options.scrollingSelector)[0];
+    }
+
     Parallax.isSet || Parallax.init();
     Parallax.iList.push(this);
 
@@ -808,7 +812,9 @@ var Parallax = function () {
       /** finding the slider with the selector provided*/
       var $slider = $window.find(options.sliderSelector);
 
-      if ($slider.length === 0) $slider = (0, _jquery2.default)('<img>').attr('src', options.src);else {
+      if ($slider.length === 0) {
+        $slider = (0, _jquery2.default)('<img>').attr('src', options.src);
+      } else {
         /** former parent where the slider will be added again when destroyed */
         options.formerParent = $slider.parent();
         /** former styles which will be set again when destroyed */
@@ -819,6 +825,7 @@ var Parallax = function () {
 
       // call re-init after all images are loaded within the slider
       $slider.children('img').add($slider).on('load', function () {
+        // this also calls the refresh method of the parallax once the image is loaded
         Parallax.update(true);
       });
 
@@ -829,7 +836,9 @@ var Parallax = function () {
     this.$w = $window;
     this.o = options;
 
-    if (typeof options.afterSetup === 'function') options.afterSetup(this);
+    if (typeof options.afterSetup === 'function') {
+      options.afterSetup(this);
+    }
   }
 
   /**
@@ -843,8 +852,20 @@ var Parallax = function () {
       var $window = this.$w;
       var options = this.o;
 
+      options.dH = Parallax.dH;
+      options.dW = Parallax.dW;
+
+      var se = options.scrollingElement;
+
+      if (se && se !== document) {
+        options.dH = se.scrollHeight;
+        options.dW = se.scrollWidth;
+      }
+
       // when not initialized yet.
-      if (!options) return;
+      if (!options) {
+        return;
+      }
 
       // find out aspect ratio for the first time
       if (!options.aspectRatio) {
@@ -931,7 +952,9 @@ var Parallax = function () {
         }
       }
 
-      if (typeof options.afterRefresh === 'function') options.afterRefresh(this);
+      if (typeof options.afterRefresh === 'function') {
+        options.afterRefresh(this);
+      }
     }
 
     /**
@@ -972,7 +995,9 @@ var Parallax = function () {
         maxWidth: 'none'
       });
 
-      if (typeof options.afterRender === 'function') options.afterRender(this);
+      if (typeof options.afterRender === 'function') {
+        options.afterRender(this);
+      }
     }
 
     /**
@@ -1007,7 +1032,9 @@ var Parallax = function () {
         Parallax.isSet = false;
       }
 
-      if (typeof options.afterDestroy === 'function') options.afterDestroy(this);
+      if (typeof this.o.afterDestroy === 'function') {
+        this.o.afterDestroy(this);
+      }
     }
 
     /////////////////////
@@ -1021,26 +1048,31 @@ var Parallax = function () {
   }], [{
     key: 'init',
     value: function init() {
-      if (Parallax.isSet) return;
+      if (Parallax.isSet) {
+        return;
+      }
 
       /** @type jQuery*/
-      var $doc = (0, _jquery2.default)(document);
+      var $se = (0, _jquery2.default)(Parallax.scrollingElement || document);
       /** @type jQuery*/
       var $win = (0, _jquery2.default)(window);
+
+      /** @type jQuery*/
+      var $sw = (0, _jquery2.default)(Parallax.scrollingElement || window);
 
       function loadDimensions() {
         Parallax.wH = $win.height();
         Parallax.wW = $win.width();
-        Parallax.dH = $doc.height();
-        Parallax.dW = $doc.width();
+        Parallax.dH = $se[0].scrollHeight || $se.height();
+        Parallax.dW = $se[0].scrollWidth || $se.width();
       }
 
       function loadScrollPosition() {
-        var winScrollTop = $win.scrollTop();
+        var winScrollTop = $sw.scrollTop();
         var scrollTopMax = Parallax.dH - Parallax.wH;
         var scrollLeftMax = Parallax.dW - Parallax.wW;
         Parallax.sT = Math.max(0, Math.min(scrollTopMax, winScrollTop));
-        Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $win.scrollLeft()));
+        Parallax.sL = Math.max(0, Math.min(scrollLeftMax, $sw.scrollLeft()));
         Parallax.overScroll = Math.max(winScrollTop - scrollTopMax, Math.min(winScrollTop, 0));
       }
 
@@ -1055,7 +1087,7 @@ var Parallax = function () {
 
       var lastPosition = -1;
       (function loop() {
-        var yoffset = window.pageYOffset;
+        var yoffset = $sw.scrollTop();
         if (lastPosition !== yoffset) {
           // Avoid overcalculations
           lastPosition = yoffset;
@@ -1076,9 +1108,11 @@ var Parallax = function () {
     value: function update() {
       var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-      if (refresh) _jquery2.default.each(Parallax.iList, function () {
-        this.refresh();
-      });
+      if (refresh) {
+        _jquery2.default.each(Parallax.iList, function () {
+          this.refresh();
+        });
+      }
       _jquery2.default.each(Parallax.iList, function () {
         this.render();
       });
@@ -1101,6 +1135,7 @@ Parallax.DEFAULTS = {
   // jquery selectors
   sliderSelector: '>.parallax-slider',
   mirrorSelector: 'body',
+  scrollingSelector: null,
   // callback functions:
   afterRefresh: null,
   afterRender: null,
