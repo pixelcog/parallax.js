@@ -16,10 +16,7 @@
     "scrolling",
     "image"
   ],
-  "author": [
-    "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
-    "Wolfgang Stöttinger (http://www.wolfography.at)"
-  ],
+  "author": "Mike Greiling <mike@pixelcog.com> (http://pixelcog.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pixelcog/parallax.js/issues"
