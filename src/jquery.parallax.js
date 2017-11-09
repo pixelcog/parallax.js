@@ -248,8 +248,9 @@ class Parallax {
       Parallax.isSet = false;
     }
 
-    if (typeof options.afterDestroy === 'function')
-      options.afterDestroy(this);
+    if (typeof this.o.afterDestroy === 'function') {
+      this.o.afterDestroy(this);
+    }
   }
 
   /////////////////////
