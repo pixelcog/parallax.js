@@ -188,13 +188,25 @@ Note that when specifying these options as html data-attributes, you should conv
 			<td>iosFix</td>
 			<td>boolean</td>
 			<td>true</td>
-			<td>iOS devices are incompatable with this plugin. If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. Disable this if you wish to implement your own graceful degradation.</td>
+			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an iOS user agent. You also need to set iosDisabled option true to make this option works. Disable this if you wish to implement your own graceful degradation.</td>
+		</tr>
+		<tr>
+			<td>iosDisabled</td>
+			<td>boolean</td>
+			<td>true</td>
+			<td>If true, the parallax effect is disabled on iOS devices.</td>
 		</tr>
 		<tr>
 			<td>androidFix</td>
 			<td>boolean</td>
 			<td>true</td>
-			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an Android user agent. Disable this if you wish to enable the parallax scrolling effect on Android devices.</td>
+			<td>If true, this option will set the parallax image as a static, centered background image whenever it detects an Android user agent. You also need to set androidDisabled option true to make this option works. Disable this if you wish to enable the parallax scrolling effect on Android devices.</td>
+		</tr>
+		<tr>
+			<td>androidDisabled</td>
+			<td>boolean</td>
+			<td>true</td>
+			<td>If true, the parallax effect is disabled on Android devices.</td>
 		</tr>
 		<tr>
 			<td>overScrollFix</td>
