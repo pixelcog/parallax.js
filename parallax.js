@@ -49,14 +49,14 @@
     if (supportsPassive) {
       el.addEventListener(name, listener, {
         passive: true
-      })
+      });
     } else {
-      el.addEventListener(name, listener)
+      el.addEventListener(name, listener);
     }
   }
 
   function passiveOff(el, name, listener) {
-    el.removeEventListenr(name, listener)
+    el.removeEventListenr(name, listener);
   }
 
   // Parallax Constructor
