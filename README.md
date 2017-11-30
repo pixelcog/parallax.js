@@ -49,7 +49,9 @@ Use these CDN links, provided by jsDelivr.com
 
 Please note, that `<!DOCTYPE html>` on top of your document is required!
 
-### Via data attributes
+### Simple version via data attributes
+
+*Note: for more complex requirements we recommend using the [inner HTML markup](#using-inner-html-for-complex-content) below! With that it's possible to use the parallax effect with almost any HTML content*
 
 To easily add a parallax effect behind an element, add `data-parallax="scroll"` to the element you want to use, and specify an image with `data-image-src="/path/to/image.jpg"`.
 
