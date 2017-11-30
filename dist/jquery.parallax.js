@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cebbd3e4698d8e72f46d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cf2ea6484646e4a0bb49"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -767,37 +767,37 @@ var Parallax = function () {
 
     var $window = (0, _jquery2.default)(element);
 
-    if (options.scrollingSelector) {
-      Parallax.scrollingElement = (0, _jquery2.default)(options.scrollingSelector)[0];
+    // little parse function to keep duplicate code to a minimum.
+    function _parsePos(pos, p1, p2) {
+      var p = parseInt(options[pos]);
+      if (isNaN(p)) {
+        if (options[pos] !== p1 && options[pos] !== p2) {
+          options.pos += (options[pos] = 'center') + ' ';
+        }
+      } else {
+        options.pos += (options[pos] = p) + 'px ';
+      }
     }
 
-    Parallax.isSet || Parallax.init();
-    Parallax.iList.push(this);
+    options.pos = '';
+    _parsePos('posX', 'left', 'right');
+    _parsePos('posY', 'top', 'bottom');
 
     // match returns null if regex is null i.e. falsy, no additional checks needed
     if (navigator.userAgent.match(options.excludeAgents)) {
       // todo: enhance
       if (options.src && !$window.is('img')) {
-        $window.css({
-          background: 'url("' + options.src + '")' + options.pos + '/cover'
-        });
+        $window.css('background', 'url("' + options.src + '") ' + options.pos + '/cover');
       }
     } else {
-      // little parse function to keep duplicate code to a minimum.
-      var _parsePos = function _parsePos(pos, p1, p2) {
-        var p = parseInt(options[pos]);
-        if (isNaN(p)) {
-          if (options[pos] !== p1 && options[pos] !== p2) {
-            options.pos += (options[pos] = 'center') + ' ';
-          }
-        } else {
-          options.pos += (options[pos] = p) + 'px ';
-        }
-      };
 
-      options.pos = '';
-      _parsePos('posX', 'left', 'right');
-      _parsePos('posY', 'top', 'bottom');
+      if (options.scrollingSelector) {
+        Parallax.scrollingElement = (0, _jquery2.default)(options.scrollingSelector)[0];
+      }
+
+      // init global instance
+      Parallax.isSet || Parallax.init();
+      Parallax.iList.push(this);
 
       /** creating the mirror element */
       var $mirror = (0, _jquery2.default)('<div>').addClass('parallax-mirror').css({
