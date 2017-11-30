@@ -15,37 +15,37 @@ class Parallax {
   constructor(element, options) {
     const $window = $(element);
 
-    if (options.scrollingSelector) {
-      Parallax.scrollingElement = $(options.scrollingSelector)[0];
+    // little parse function to keep duplicate code to a minimum.
+    function _parsePos(pos, p1, p2) {
+      const p = parseInt(options[pos]);
+      if (isNaN(p)) {
+        if (options[pos] !== p1 && options[pos] !== p2) {
+          options.pos += (options[pos] = 'center') + ' ';
+        }
+      } else {
+        options.pos += (options[pos] = p) + 'px ';
+      }
     }
 
-    Parallax.isSet || Parallax.init();
-    Parallax.iList.push(this);
+    options.pos = '';
+    _parsePos('posX', 'left', 'right');
+    _parsePos('posY', 'top', 'bottom');
 
     // match returns null if regex is null i.e. falsy, no additional checks needed
     if (navigator.userAgent.match(options.excludeAgents)) {
       // todo: enhance
       if (options.src && !$window.is('img')) {
-        $window.css({
-          background: 'url("' + options.src + '")' + options.pos + '/cover'
-        });
+        $window.css('background', 'url("' + options.src + '") ' + options.pos + '/cover');
       }
     } else {
-      // little parse function to keep duplicate code to a minimum.
-      function _parsePos(pos, p1, p2) {
-        const p = parseInt(options[pos]);
-        if (isNaN(p)) {
-          if (options[pos] !== p1 && options[pos] !== p2) {
-            options.pos += (options[pos] = 'center') + ' ';
-          }
-        } else {
-          options.pos += (options[pos] = p) + 'px ';
-        }
+
+      if (options.scrollingSelector) {
+        Parallax.scrollingElement = $(options.scrollingSelector)[0];
       }
 
-      options.pos = '';
-      _parsePos('posX', 'left', 'right');
-      _parsePos('posY', 'top', 'bottom');
+      // init global instance
+      Parallax.isSet || Parallax.init();
+      Parallax.iList.push(this);
 
       /** creating the mirror element */
       const $mirror = $('<div>').addClass('parallax-mirror').css({
