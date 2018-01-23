@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/pixelcog/parallax.js#readme",
   "dependencies": {
-    "jquery": ">=1.7"
+    "jquery": ">=1.7",
+    "uglify-js": "^3.3.8"
   }
 }
