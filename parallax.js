@@ -53,12 +53,9 @@
 
     var positions = (this.position + '').toLowerCase().match(/\S+/g) || [];
 
-    if (positions.length < 1) {
-      positions.push('center');
-    }
-    if (positions.length == 1) {
-      positions.push(positions[0]);
-    }
+    if (positions.length < 1) positions.push('center');
+
+    if (positions.length == 1) positions.push(positions[0]);
 
     if (positions[0] == 'top' || positions[0] == 'bottom' || positions[1] == 'left' || positions[1] == 'right') {
       positions = [positions[1], positions[0]];
@@ -71,19 +68,15 @@
     self.positionY = positions[1];
 
     if (this.positionX != 'left' && this.positionX != 'right') {
-      if (isNaN(parseInt(this.positionX))) {
-        this.positionX = 'center';
-      } else {
-        this.positionX = parseInt(this.positionX);
-      }
+      isNaN(parseInt(this.positionX)) ?
+      this.positionX = 'center' :
+      this.positionX = parseInt(this.positionX);
     }
 
     if (this.positionY != 'top' && this.positionY != 'bottom') {
-      if (isNaN(parseInt(this.positionY))) {
-        this.positionY = 'center';
-      } else {
-        this.positionY = parseInt(this.positionY);
-      }
+      isNaN(parseInt(this.positionY)) ?
+      this.positionY = 'center' :
+      this.positionY = parseInt(this.positionY);
     }
 
     this.position =
@@ -120,7 +113,7 @@
     if (slider.length == 0)
       this.$slider = $('<img />').prependTo(this.$mirror);
     else {
-      this.$slider = slider.prependTo(this.$mirror)
+      this.$slider = slider.prependTo(this.$mirror);
       sliderExisted = true;
     }
 
@@ -379,12 +372,9 @@
       {
         $.extend($this.data('px.parallax'), options);
       }
+
       if (typeof option == 'string') {
-        if(option == 'destroy'){
-            Parallax.destroy(this);
-        }else{
-          Parallax[option]();
-        }
+        option == 'destroy' ? Parallax.destroy(this) : Parallax[option]();
       }
     });
   }
