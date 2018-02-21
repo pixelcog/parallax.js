@@ -7,7 +7,7 @@ Simple parallax scrolling implemented as a jQuery plugin.
 
 Please also check our [v2.0.0-alpha](https://github.com/pixelcog/parallax.js/tree/v2.0.0-alpha)! We'd be happy to receive your feedback!
 
-**ATTENTION:** please use the issue tracker for bug reports and feature requests ONLY! For questions and topics which go along the lines "I cannot get this to work" please turn to stackoverflow for help and use the tag #parallax.js. Thank you for your understanding!
+**ATTENTION:** please use the issue tracker for bug reports and feature requests ONLY! For questions and topics which go along the lines "I cannot get this to work" please turn to [stackoverflow.com](https://stackoverflow.com/questions/tagged/parallax.js) for help and use the tag [parallax.js](https://stackoverflow.com/questions/tagged/parallax.js). Thank you for your understanding!
 
 
 ## Installation
