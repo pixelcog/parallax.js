@@ -149,6 +149,10 @@
     if (!sliderExisted)
       this.$slider[0].src = this.imageSrc;
 
+    // alt images for seo
+    if (this.imageAlt)
+        this.$slider[0].alt = this.imageAlt;
+
     if (this.naturalHeight && this.naturalWidth || this.$slider[0].complete || slider.length > 0) {
       this.$slider.trigger('load');
     }
@@ -405,8 +409,8 @@
 
   // Parallax Data-API
 
-  $( function () { 
-    $('[data-parallax="scroll"]').parallax(); 
+  $( function () {
+    $('[data-parallax="scroll"]').parallax();
   });
 
 }(jQuery, window, document));
