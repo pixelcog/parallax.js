@@ -144,6 +144,10 @@
       Parallax.sliders.push(self);
       Parallax.isFresh = false;
       Parallax.requestRender();
+      
+      if (typeof self.loaded === 'function') {
+        self.loaded();
+      }
     });
 
     if (!sliderExisted)
