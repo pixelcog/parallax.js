@@ -98,6 +98,7 @@
           backgroundPosition: this.position
         });
       }
+      this.$element.addClass('fix ios-fix');
       return this;
     }
 
@@ -109,6 +110,7 @@
           backgroundPosition: this.position
         });
       }
+      this.$element.addClass('fix android-fix');
       return this;
     }
 
