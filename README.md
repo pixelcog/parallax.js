@@ -53,7 +53,7 @@ Parallax.DEFAULTS = {
 These defaults can be changed easily, e.g.:
 ```javascript
 Parallax.DEFAULTS.speed = -.2;
-Parallax.DEFAULTS.afreRefresh = (instance) => { doSomethingWith(instance); };
+Parallax.DEFAULTS.afterRefresh = (instance) => { doSomethingWith(instance); };
 ```
 
 #### Data Attributes 
