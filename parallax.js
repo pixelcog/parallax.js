@@ -380,7 +380,9 @@
     destroy: function(el){
       var i,
           parallaxElement = $(el).data('px.parallax');
-      parallaxElement.$mirror.remove();
+      if (!!parallaxElement.$mirror) {
+        parallaxElement.$mirror.remove();
+      }
       for(i=0; i < this.sliders.length; i+=1){
         if(this.sliders[i] == parallaxElement){
           this.sliders.splice(i, 1);
